@@ -2,7 +2,7 @@ import clienteAxios from "../config/axios";
 
 export const createQuotation = async (form) => {
     try {
-        const { data } = await clienteAxios.post("/cotizaciones/register", form);
+        const { data } = await clienteAxios.post("/cotizaciones/createCotizacion", form);
         return data;
     } catch (error) {
         console.error("Error creating quotation", error);
@@ -42,8 +42,21 @@ export const getQuotation = async (id) => {
 };
 
 export const updateQuotation = async (id, form) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        console.error("No token found");
+        return;
+    }
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    };
     try {
-        const { data } = await clienteAxios.put(`/cotizaciones/${id}`, form);
+        const { data } = await clienteAxios.patch(`/cotizaciones/updateCotizacion/${id}`, form, config);
         return data;
     } catch (error) {
         console.error("Error updating quotation", error);

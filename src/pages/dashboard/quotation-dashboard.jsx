@@ -6,35 +6,50 @@ import ExportExcelButton from "../../shared/exportExcelButton";
 import ExportPDFButton from "../../shared/exportPDFButton";
 import Pagination from "../../shared/pagination";
 import QuotationModalDashboard from "./modals/quotation-modal-dashboard";
+import QuotationDocument from "../../shared/quotationDocument";
+import ReplacementDocument from "../../shared/replacementDocument";
 
 const QuotationDashboard = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);
-
     const [quotations, setQuotations] = useState([]);
 
+    const fetchQuotations = async () => {
+        const data = await getQuotations();
+        setQuotations(data);
+    };
     useEffect(() => {
-        // Cuando el componente carga, obtener las cotizaciones
-        const fetchQuotations = async () => {
-            const data = await getQuotations();
-            setQuotations(data); // Actualizar el estado con las cotizaciones recibidas
-        };
-
         fetchQuotations();
-    }, []); // Ejecutar solo una vez al cargar el componente
+    }, []);
+
+    const filteredQuotations = quotations.filter((item) => !item.done);
+
+    // Si no hay elementos en la página actual, actualiza la página actual
+    useEffect(() => {
+        const maxPage = Math.ceil(filteredQuotations.length / itemsPerPage);
+        if (currentPage > maxPage) {
+            setCurrentPage(maxPage || 1);
+        }
+    }, [currentPage, filteredQuotations, itemsPerPage]);
 
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(quotations.length / itemsPerPage); i++) {
+    for (
+        let i = 1;
+        i <= Math.ceil(filteredQuotations.length / itemsPerPage);
+        i++
+    ) {
         pageNumbers.push(i);
     }
 
     // Calcular los índices del primer y último item de la página actual
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = quotations.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = filteredQuotations.slice(
+        indexOfFirstItem,
+        indexOfLastItem
+    );
 
     // Cambiar de página
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -64,8 +79,13 @@ const QuotationDashboard = () => {
                     </div>
                     <div className="flex gap-x-3">
                         <ExportPDFButton
-                            data={quotations}
-                            fileName="cotizaciones.pdf"
+                            buttonName="Exportar a PDF"
+                            document={
+                                <ReplacementDocument
+                                    data={quotations}
+                                    // fileName="cotizaciones.pdf"
+                                />
+                            }
                         />
                         <ExportExcelButton
                             data={quotations}
@@ -98,35 +118,37 @@ const QuotationDashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentItems.map((item, index) => (
-                                <tr
-                                    key={index}
-                                    className="bg-white border-b-2 border-gray-200"
-                                >
-                                    <td className="py-2 px-4 text-sm text-gray-700">
-                                        {item.brand}
-                                    </td>
-                                    <td className="py-2 px-4 text-sm text-gray-700">
-                                        {item.model}
-                                    </td>
-                                    <td className="py-2 px-4 text-sm text-gray-700">
-                                        {item.name}
-                                    </td>
-                                    <td className="py-2 px-4 text-sm text-gray-700">
-                                        {item.email}
-                                    </td>
-                                    <td className="py-2 px-4 text-sm text-gray-700">
-                                        {item.phone}
-                                    </td>
-                                    {/* <td className="py-2 px-4 text-sm text-gray-700">
+                            {currentItems
+                                .filter((item) => !item.done)
+                                .map((item, index) => (
+                                    <tr
+                                        key={index}
+                                        className="bg-white border-b-2 border-gray-200"
+                                    >
+                                        <td className="py-2 px-4 text-sm text-gray-700">
+                                            {item.brand}
+                                        </td>
+                                        <td className="py-2 px-4 text-sm text-gray-700">
+                                            {item.model}
+                                        </td>
+                                        <td className="py-2 px-4 text-sm text-gray-700">
+                                            {item.name}
+                                        </td>
+                                        <td className="py-2 px-4 text-sm text-gray-700">
+                                            {item.email}
+                                        </td>
+                                        <td className="py-2 px-4 text-sm text-gray-700">
+                                            {item.phone}
+                                        </td>
+                                        {/* <td className="py-2 px-4 text-sm text-gray-700">
                                         <img
                                             src={item.foto}
                                             alt={item.nombre}
                                             className="h-10 w-10 object-cover"
                                         />
                                     </td> */}
-                                    <td className="py-2 px-4 text-sm text-gray-700 flex gap-x-2">
-                                        {/* <button
+                                        <td className="py-2 px-4 text-sm text-gray-700 flex gap-x-2">
+                                            {/* <button
                                             type="button"
                                             className="rounded-md p-2 hover:shadow-md"
                                         >
@@ -138,16 +160,16 @@ const QuotationDashboard = () => {
                                         >
                                             <FaTrash />
                                         </button> */}
-                                        <button
-                                            type="button"
-                                            className="rounded-md p-2 hover:shadow-md"
-                                            onClick={() => openModal(item)}
-                                        >
-                                            <FaEye />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                                            <button
+                                                type="button"
+                                                className="rounded-md p-2 hover:shadow-md"
+                                                onClick={() => openModal(item)}
+                                            >
+                                                <FaEye />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 </div>
@@ -160,6 +182,7 @@ const QuotationDashboard = () => {
                     isOpen={isModalOpen}
                     onClose={closeModal}
                     modalContent={modalContent}
+                    handleReload={fetchQuotations}
                 />
             </div>
         </div>
