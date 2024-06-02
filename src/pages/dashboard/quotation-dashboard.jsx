@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaEye } from "react-icons/fa";
-import { getQuotations } from "../../services/quotation-service";
+import { getQuotations, sendEmail } from "../../services/quotation-service";
 import ExportExcelButton from "../../shared/exportExcelButton";
 import ExportPDFButton from "../../shared/exportPDFButton";
 import Pagination from "../../shared/pagination";
 import QuotationModalDashboard from "./modals/quotation-modal-dashboard";
 import QuotationDocument from "../../shared/quotationDocument";
 import ReplacementDocument from "../../shared/replacementDocument";
+import SendEmailModal from "../../shared/sendEmailModal";
 
 const QuotationDashboard = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -15,6 +16,8 @@ const QuotationDashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);
     const [quotations, setQuotations] = useState([]);
+
+    // const [isSendEmailModalOpen, setIsSendEmailModalOpen] = useState(false);
 
     const fetchQuotations = async () => {
         const data = await getQuotations();
@@ -63,6 +66,51 @@ const QuotationDashboard = () => {
         setIsModalOpen(false);
         setModalContent(null);
     };
+
+    // const openSendEmailModal = (content) => {
+    //     setModalContent(content);
+    //     setIsSendEmailModalOpen(true);
+    // };
+
+    // const closeSendEmailModal = () => {
+    //     setIsSendEmailModalOpen(false);
+    //     setModalContent(null);
+    // };
+
+    // const handleSendEmail = async () => {
+    //     // Lógica para enviar el correo electrónico con el PDF adjunto
+    //     // Ejemplo de llamada al backend:
+    //     const response = await fetch("/api/send-email", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             email: modalContent.email,
+    //             pdfData: generatedPDFData, // Datos del PDF generado
+    //         }),
+    //     });
+
+    //     if (response.ok) {
+    //         alert("Correo enviado exitosamente");
+    //         closeSendEmailModal();
+    //     } else {
+    //         alert("Error al enviar el correo");
+    //     }
+    // };
+
+    // const handleSendEmail = async () => {
+    //     const response = await sendEmail(modalContent.email, services);
+    //     console.log(response);
+    //     if (!response) return "No se pudo enviar el correo";
+
+    //     const data = await updateQuotation(modalContent._id, {
+    //         done: !modalContent.done,
+    //     });
+    //     console.log(data);
+    //     handleReload();
+    //     onClose();
+    // };
 
     return (
         <div className="container mx-auto p-4">
@@ -183,7 +231,14 @@ const QuotationDashboard = () => {
                     onClose={closeModal}
                     modalContent={modalContent}
                     handleReload={fetchQuotations}
+                    // openSendEmailModal={openSendEmailModal}
                 />
+                {/* <SendEmailModal
+                    isOpen={isSendEmailModalOpen}
+                    onClose={closeSendEmailModal}
+                    email={modalContent?.email}
+                    handleSendEmail={handleSendEmail}
+                /> */}
             </div>
         </div>
     );

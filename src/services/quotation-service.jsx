@@ -2,7 +2,10 @@ import clienteAxios from "../config/axios";
 
 export const createQuotation = async (form) => {
     try {
-        const { data } = await clienteAxios.post("/cotizaciones/createCotizacion", form);
+        const { data } = await clienteAxios.post(
+            "/cotizaciones/createCotizacion",
+            form
+        );
         return data;
     } catch (error) {
         console.error("Error creating quotation", error);
@@ -25,7 +28,10 @@ export const getQuotations = async () => {
     };
 
     try {
-        const { data } = await clienteAxios.get("/cotizaciones/getCotizaciones", config);
+        const { data } = await clienteAxios.get(
+            "/cotizaciones/getCotizaciones",
+            config
+        );
         return data;
     } catch (error) {
         console.error("Error getting quotations", error);
@@ -55,8 +61,13 @@ export const updateQuotation = async (id, form) => {
             Authorization: `Bearer ${token}`,
         },
     };
+
     try {
-        const { data } = await clienteAxios.patch(`/cotizaciones/updateCotizacion/${id}`, form, config);
+        const { data } = await clienteAxios.patch(
+            `/cotizaciones/updateCotizacion/${id}`,
+            form,
+            config
+        );
         return data;
     } catch (error) {
         console.error("Error updating quotation", error);
@@ -72,6 +83,73 @@ export const deleteQuotation = async (id) => {
     }
 };
 
+export const downloadPDFQuotation = async (id, services) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        console.error("No token found");
+        return;
+    }
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+    };
+
+    try {
+        const { data } = await clienteAxios.post(
+            `/cotizaciones/invoice/${id}`,
+            { services },
+            config
+        );
+        // Crear un link para descargar el archivo
+        const url = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "cotizacion.pdf");
+        document.body.appendChild(link);
+        link.click();
+
+        return data;
+    } catch (error) {
+        console.error("Error downloading quotation", error);
+    }
+};
+
+export const sendEmail = async (id, file) => {
+// export const sendEmail = async (id) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        console.error("No token found");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("archivo", file);
+
+    const config = {
+        headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+        },
+        // responseType: "blob",
+    };
+
+    try {
+        const { data } = await clienteAxios.post(
+            `/cotizaciones/send-email/${id}`,
+            formData,
+            config
+        );
+        return data;
+    } catch (error) {
+        console.error("Error sending email", error);
+    }
+};
 
 // ----------------------------------------------
 // Con FETCH

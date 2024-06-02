@@ -1,50 +1,60 @@
 import React, { useState } from "react";
-import Modal from "../../../shared/modal";
 import ExportPDFButton from "../../../shared/exportPDFButton";
-import QuotationDocument from "../../../shared/quotationDocument";
-import Logo from "../../../assets/logo.png";
-import { getQuotations, updateQuotation } from "../../../services/quotation-service";
+import Modal from "../../../shared/modal";
+import SendEmailModal from "../../../shared/sendEmailModal";
+import { sendEmail, updateQuotation } from "../../../services/quotation-service";
 
-const QuotationModalDashboard = ({ isOpen, onClose, modalContent, handleReload }) => {
-    const [services, setServices] = useState(modalContent?.services || []);
+const QuotationModalDashboard = ({
+    isOpen,
+    onClose,
+    modalContent,
+    handleReload,
+    // openSendEmailModal,
+}) => {
+    const [services, setServices] = useState([]);
 
     const [formData, setFormData] = useState({
-        name: "",
         description: "",
         quantity: "",
         price: "",
     });
 
-    // Verificar si modalContent está definido y no es null
-    if (!modalContent) {
-        return null; // Otra opción es mostrar un mensaje de carga o manejar el caso de modalContent null
-    }
+    const [isSendEmailModalOpen, setIsSendEmailModalOpen] = useState(false);
 
-    // Verificar si se proporcionan servicios y calcular el precio total si es necesario
-    const calculateTotalPrice = () => {
-        return services.reduce(
-            (total, service) => total + service.price * service.quantity,
-            0
-        );
+    const openSendEmailModal = (content) => {
+        // setModalContent(content);
+        setIsSendEmailModalOpen(true);
+    };
+
+    const closeSendEmailModal = () => {
+        setIsSendEmailModalOpen(false);
+        // setModalContent(null);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const newService = {
-            // name: form.name.value,
-            name: formData.name,
-            description: formData.description,
-            quantity: formData.quantity,
-            price: formData.price,
-        };
-        setServices([...services, newService]);
+
+        setServices([...services, formData]);
+        setFormData({
+            description: "",
+            quantity: "",
+            price: "",
+        });
+        console.log(services);
     };
 
-    const changeState = async () => {
-        const data = await updateQuotation(modalContent._id, { done: !modalContent.done });
-        console.log(data);
-        handleReload();
-        onClose();
+    const handleSendEmail = async (file) => {
+        const response = await sendEmail(modalContent._id, file);
+        console.log(response);
+        if (!response) return "No se pudo enviar el correo";
+
+        // const data = await updateQuotation(modalContent._id, {
+        //     done: !modalContent.done,
+        // });
+        // console.log(data);
+
+        // handleReload();
+        // onClose();
     };
 
     return (
@@ -97,33 +107,14 @@ const QuotationModalDashboard = ({ isOpen, onClose, modalContent, handleReload }
                     >
                         <div className="mb-4">
                             <label
-                                htmlFor="name"
-                                className="block text-gray-700 text-sm font-bold mb-2"
-                            >
-                                Nombre completo
-                            </label>
-                            <input
-                                type="text"
-                                placeholder="Nombre del servicio"
-                                value={formData.name}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        name: e.target.value,
-                                    })
-                                }
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label
-                                htmlFor="name"
+                                htmlFor="description"
                                 className="block text-gray-700 text-sm font-bold mb-2"
                             >
                                 Descripción
                             </label>
                             <input
                                 type="text"
+                                id="description"
                                 placeholder="Descripción del servicio"
                                 value={formData.description}
                                 onChange={(e) =>
@@ -137,13 +128,14 @@ const QuotationModalDashboard = ({ isOpen, onClose, modalContent, handleReload }
                         </div>
                         <div className="mb-4">
                             <label
-                                htmlFor="name"
+                                htmlFor="quantity"
                                 className="block text-gray-700 text-sm font-bold mb-2"
                             >
-                                Nombre completo
+                                Cantidad
                             </label>
                             <input
                                 type="number"
+                                id="quantity"
                                 placeholder="Cantidad"
                                 value={formData.quantity}
                                 onChange={(e) =>
@@ -157,13 +149,14 @@ const QuotationModalDashboard = ({ isOpen, onClose, modalContent, handleReload }
                         </div>
                         <div className="mb-4">
                             <label
-                                htmlFor="name"
+                                htmlFor="price"
                                 className="block text-gray-700 text-sm font-bold mb-2"
                             >
-                                Nombre completo
+                                Precio
                             </label>
                             <input
                                 type="number"
+                                id="price"
                                 placeholder="Precio"
                                 value={formData.price}
                                 onChange={(e) =>
@@ -193,9 +186,6 @@ const QuotationModalDashboard = ({ isOpen, onClose, modalContent, handleReload }
                             <thead>
                                 <tr className="bg-gray-200">
                                     <th className="border border-gray-300 px-4 py-2">
-                                        Servicio
-                                    </th>
-                                    <th className="border border-gray-300 px-4 py-2">
                                         Descripción
                                     </th>
                                     <th className="border border-gray-300 px-4 py-2">
@@ -210,9 +200,6 @@ const QuotationModalDashboard = ({ isOpen, onClose, modalContent, handleReload }
                                 <tbody>
                                     {services.map((service, index) => (
                                         <tr key={index}>
-                                            <td className="border border-gray-300 px-4 py-2">
-                                                {service.name}
-                                            </td>
                                             <td className="border border-gray-300 px-4 py-2">
                                                 {service.description}
                                             </td>
@@ -230,19 +217,26 @@ const QuotationModalDashboard = ({ isOpen, onClose, modalContent, handleReload }
                     </div>
 
                     <ExportPDFButton
-                        buttonName="Generar Cotización"
-                        document={
-                            <QuotationDocument
-                                data={modalContent}
-                                logo={Logo}
-                                companyName="Nombre de la Empresa"
-                                services={services}
-                                price={calculateTotalPrice()}
-                            />
-                        }
+                        id={modalContent?._id}
+                        data={services}
+                        // fileName="cotizaciones.pdf"
                     />
 
-                    <button onClick={changeState}>Click</button>
+                    <button
+                        className="bg-indigo-500 hover:bg-indigo-600 text-white border rounded-md p-2 mt-4"
+                        onClick={() => openSendEmailModal(modalContent)}
+                    >
+                        Enviar Cotización al Cliente
+                    </button>
+
+                    <SendEmailModal
+                        isOpen={isSendEmailModalOpen}
+                        onClose={closeSendEmailModal}
+                        email={modalContent?.email}
+                        handleSendEmail={handleSendEmail}
+                    />
+
+                    {/* <button onClick={changeState}>Click</button> */}
                 </div>
             </div>
         </Modal>
@@ -250,35 +244,3 @@ const QuotationModalDashboard = ({ isOpen, onClose, modalContent, handleReload }
 };
 
 export default QuotationModalDashboard;
-
-// import React from "react";
-// import Modal from "../../../shared/modal";
-
-// const QuotationModalDashboard = ({ isOpen, onClose, modalContent }) => {
-//     return (
-//         <Modal isOpen={isOpen} onClose={onClose}>
-//             <div>
-{
-    /* <h3 className="text-lg font-semibold">Detalles del Repuesto</h3>
-                <p><strong>Marca:</strong> {modalContent?.brand}</p>
-                <p><strong>Modelo:</strong> {modalContent?.model}</p>
-                <p><strong>Problemas Seleccionados:</strong> {modalContent?.selectedProblems}</p>
-                <p><strong>Otro Problema:</strong> {modalContent?.otherProblem}</p>
-                <p><strong>Descripción del Problema:</strong> {modalContent?.descriptionProblem}</p>
-                <p><strong>Nombre:</strong> {modalContent?.name}</p>
-                <p><strong>Correo Electrónico:</strong> {modalContent?.email}</p>
-                <p><strong>Teléfono:</strong> {modalContent?.phone}</p> */
-}
-{
-    /* <img
-                    src={modalContent?.foto}
-                    alt={modalContent?.nombre}
-                    className="h-20 w-20 object-cover mt-2"
-                /> */
-}
-//             </div>
-//         </Modal>
-//     );
-// };
-
-// export default QuotationModalDashboard;
