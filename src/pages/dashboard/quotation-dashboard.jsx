@@ -9,6 +9,7 @@ import QuotationModalDashboard from "./modals/quotation-modal-dashboard";
 import QuotationDocument from "../../shared/quotationDocument";
 import ReplacementDocument from "../../shared/replacementDocument";
 import SendEmailModal from "../../shared/sendEmailModal";
+import { useNavigate } from "react-router-dom";
 
 const QuotationDashboard = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,6 +17,8 @@ const QuotationDashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);
     const [quotations, setQuotations] = useState([]);
+    const navigation = useNavigate();
+
 
     // const [isSendEmailModalOpen, setIsSendEmailModalOpen] = useState(false);
 
@@ -211,7 +214,8 @@ const QuotationDashboard = () => {
                                             <button
                                                 type="button"
                                                 className="rounded-md p-2 hover:shadow-md"
-                                                onClick={() => openModal(item)}
+                                                // onClick={() => openModal(item)}
+                                                onClick={() => navigation(`/dashboard/quotation/${item._id}`)}
                                             >
                                                 <FaEye />
                                             </button>

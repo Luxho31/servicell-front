@@ -14,6 +14,7 @@ import Quotation from "./pages/landing/quotation/quotation";
 import ReplacementDashboard from "./pages/dashboard/replacement-dashboard";
 import QuotationDashboard from "./pages/dashboard/quotation-dashboard";
 import InventoryDashboard from "./pages/dashboard/inventory-dashboard";
+import ResponseQuotationDashboard from "./pages/dashboard/response-quotation-dashboard";
 
 function App() {
     return (
@@ -41,6 +42,8 @@ function App() {
                         <Route path="replacement" element={<ReplacementDashboard />} />
                         <Route path="quotation" element={<QuotationDashboard />} />
                         <Route path="inventory" element={<InventoryDashboard />} />
+                        
+                        <Route path="quotation/:id" element={<ResponseQuotationDashboard />} />
                     </Route>
                 </Routes>
             </AuthProvider>

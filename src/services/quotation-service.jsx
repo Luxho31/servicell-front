@@ -39,8 +39,22 @@ export const getQuotations = async () => {
 };
 
 export const getQuotation = async (id) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        console.error("No token found");
+        return;
+    }
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
     try {
-        const { data } = await clienteAxios.get(`/cotizaciones/${id}`);
+        const { data } = await clienteAxios.get(`/cotizaciones/getCotizacionById/${id}`, config);
         return data;
     } catch (error) {
         console.error("Error getting quotation", error);

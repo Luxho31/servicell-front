@@ -68,7 +68,11 @@ const Quotation = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // formData.selectedProblems = formData.selectedProblems.join(", ");
-        formData.otherProblem = "-";
+        // formData.otherProblem = "-";
+
+        if (!formData.selectedProblems.includes("Otro")) {
+            formData.otherProblem = "-";
+        }
 
         try {
             await createQuotation(formData);
