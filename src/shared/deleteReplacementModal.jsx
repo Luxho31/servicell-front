@@ -1,17 +1,13 @@
 import React, { useState } from "react";
+import { deleteReplacement } from "../services/replacement-service";
 
-const SendEmailModal = ({ isOpen, onClose, email, handleSendEmail }) => {
-    const [selectedFile, setSelectedFile] = useState(null);
-
-    const onSendEmail = async () => {
-        if (selectedFile) {
-            await handleSendEmail(selectedFile);
-            setSelectedFile(null);
-        } else {
-            console.error("No file selected");
-        }
+const DeleteReplacementModal = ({ isOpen, onClose, modalContent, handleReload }) => {
+    const deleteRepuesto = async () => {
+        const id = modalContent?._id;
+        await deleteReplacement(id);
+        handleReload();
+        onClose();
     };
-
     return (
         <div
             className={`fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center transition-opacity duration-300 ${
@@ -24,18 +20,10 @@ const SendEmailModal = ({ isOpen, onClose, email, handleSendEmail }) => {
                     isOpen ? "scale-100" : "scale-90"
                 }`}
             >
-                <h2 className="text-xl font-semibold mb-4">Confirmar Envío</h2>
-                <p>¿Desea enviar la cotización a {email}?</p>
-                <p>Una vez enviado, no se podrá modificar la cotización.</p>
+                <h2 className="text-xl font-semibold mb-4">Eliminar Repuesto</h2>
+                <p>¿Seguro que desea eliminar este repuesto?</p>
+                <p>Una vez eliminado, no se podrá recuperar.</p>
                 <p>¿Desea continuar?</p>
-                <form>
-                    <input
-                        type="file"
-                        name="archivo"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-                        onChange={(e) => setSelectedFile(e.target.files[0])}
-                    />
-                </form>
                 <div className="flex justify-end mt-4">
                     <button
                         onClick={onClose}
@@ -44,10 +32,10 @@ const SendEmailModal = ({ isOpen, onClose, email, handleSendEmail }) => {
                         Cancelar
                     </button>
                     <button
-                        onClick={onSendEmail}
+                        onClick={deleteRepuesto}
                         className="bg-indigo-500 text-white rounded-md p-2"
                     >
-                        Enviar
+                        Eliminar
                     </button>
                 </div>
             </div>
@@ -55,4 +43,4 @@ const SendEmailModal = ({ isOpen, onClose, email, handleSendEmail }) => {
     );
 };
 
-export default SendEmailModal;
+export default DeleteReplacementModal;

@@ -2,35 +2,86 @@ import React from "react";
 import "./pagination.css";
 
 const Pagination = ({ currentPage, totalPages, paginate }) => {
-    const handleRange = (currentPage, totalPages) => {
-        const range = 2; // Número de páginas a mostrar antes y después de la página actual
-        const firstPage = 1;
-        const lastPage = totalPages;
+    const maxVisibleButtons = 5;
 
-        // Si hay menos de 5 páginas, mostrar todas
-        if (lastPage <= 5) return [...Array(lastPage).keys()].map((i) => i + 1);
+    const generatePageButtons = () => {
+        const pageButtons = [];
+        const leftOffset = Math.ceil((maxVisibleButtons - 1) / 2);
+        // const rightOffset = Math.floor((maxVisibleButtons - 1) / 2);
 
-        let startPage, endPage;
+        let startPage = Math.max(1, currentPage - leftOffset);
+        let endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
 
-        // Si la página actual está en el rango de las primeras 3 páginas
-        if (currentPage <= firstPage + 1 + range) {
-            startPage = firstPage;
-            endPage = startPage + range * 2;
-        }
-        // Si la página actual está en el rango de las últimas 3 páginas
-        else if (currentPage >= lastPage - range) {
-            startPage = lastPage - range * 2;
-            endPage = lastPage;
-        }
-        // Si la página actual está en el rango intermedio
-        else {
-            startPage = currentPage - range;
-            endPage = currentPage + range;
+        if (endPage - startPage < maxVisibleButtons - 1) {
+            startPage = Math.max(1, endPage - maxVisibleButtons + 1);
         }
 
-        return [...Array(endPage - startPage + 1).keys()].map(
-            (i) => i + startPage
-        );
+        for (let i = startPage; i <= endPage; i++) {
+            pageButtons.push(
+                <li key={i}>
+                    <button
+                        onClick={() => paginate(i)}
+                        className={`${
+                            currentPage === i ? "!bg-blue-500 !text-white" : "bg-white text-gray-700"
+                        } py-2 px-4 border border-gray-300 hover:bg-gray-50`}
+                    >
+                        {i}
+                    </button>
+                </li>
+            );
+        }
+
+        if (startPage > 1) {
+            pageButtons.unshift(
+                <li key="start">
+                    <button
+                        onClick={() => paginate(1)}
+                        className="bg-white text-gray-700 py-2 px-4 border border-gray-300 hover:bg-gray-50"
+                    >
+                        1
+                    </button>
+                </li>
+            );
+            if (startPage > 2) {
+                pageButtons.splice(1, 0,
+                    <li key="ellipsisStart">
+                        <button
+                            className="bg-white text-gray-700 py-2 px-4 border border-gray-300 hover:bg-gray-50"
+                            disabled
+                        >
+                            ...
+                        </button>
+                    </li>
+                );
+            }
+        }
+
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                pageButtons.push(
+                    <li key="ellipsisEnd">
+                        <button
+                            className="bg-white text-gray-700 py-2 px-4 border border-gray-300 hover:bg-gray-50"
+                            disabled
+                        >
+                            ...
+                        </button>
+                    </li>
+                );
+            }
+            pageButtons.push(
+                <li key="end">
+                    <button
+                        onClick={() => paginate(totalPages)}
+                        className="bg-white text-gray-700 py-2 px-4 border border-gray-300 hover:bg-gray-50"
+                    >
+                        {totalPages}
+                    </button>
+                </li>
+            );
+        }
+
+        return pageButtons;
     };
 
     return (
@@ -40,103 +91,34 @@ const Pagination = ({ currentPage, totalPages, paginate }) => {
                     <li>
                         <button
                             onClick={() => paginate(1)}
-                            className={`${
-                                currentPage === 1 ? "pointer-events-none" : ""
-                            } py-2 px-4 border border-gray-300 rounded-l-md bg-white hover:bg-gray-50`}
+                            className={`${currentPage === 1 ? "pointer-events-none" : ""} py-2 px-4 border border-gray-300 rounded-l-md bg-white hover:bg-gray-50`}
                         >
-                            &laquo;&laquo;
+                            {"<<"}
                         </button>
                     </li>
                     <li>
                         <button
-                            onClick={() =>
-                                paginate(currentPage === 1 ? currentPage : currentPage - 1)
-                            }
-                            className={`${
-                                currentPage === 1 ? "pointer-events-none" : ""
-                            } py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50`}
+                            onClick={() => paginate(currentPage - 1)}
+                            className={`${currentPage === 1 ? "pointer-events-none" : ""} py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50`}
                         >
-                            &laquo;
+                            {"<"}
                         </button>
                     </li>
-                    {currentPage > 4 && (
-                        <li>
-                            <button
-                                onClick={() => paginate(1)}
-                                className="py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50"
-                            >
-                                1
-                            </button>
-                        </li>
-                    )}
-                    {currentPage > 4 && (
-                        <li>
-                            <button
-                                className="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
-                                disabled
-                            >
-                                ...
-                            </button>
-                        </li>
-                    )}
-                    {handleRange(currentPage, totalPages).map((number) => (
-                        <li key={number}>
-                            <button
-                                onClick={() => paginate(number)}
-                                className={`${
-                                    currentPage === number
-                                        ? "!bg-blue-500 !text-white"
-                                        : "bg-white text-gray-700"
-                                } py-2 px-4 border border-gray-300 hover:bg-gray-50 ${
-                                    currentPage === number ? "pointer-events-none" : ""
-                                }`}
-                            >
-                                {number}
-                            </button>
-                        </li>
-                    ))}
-                    {currentPage < totalPages - 3 && (
-                        <li>
-                            <button
-                                className="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
-                                disabled
-                            >
-                                ...
-                            </button>
-                        </li>
-                    )}
-                    {currentPage < totalPages - 2 && (
-                        <li>
-                            <button
-                                onClick={() => paginate(totalPages)}
-                                className="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
-                            >
-                                {totalPages}
-                            </button>
-                        </li>
-                    )}
+                    {generatePageButtons()}
                     <li>
                         <button
-                            onClick={() =>
-                                paginate(
-                                    currentPage === totalPages ? currentPage : currentPage + 1
-                                )
-                            }
-                            className={`${
-                                currentPage === totalPages ? "pointer-events-none" : ""
-                            } py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50`}
+                            onClick={() => paginate(currentPage + 1)}
+                            className={`${currentPage === totalPages ? "pointer-events-none" : ""} py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50`}
                         >
-                            &raquo;
+                            {">"}
                         </button>
                     </li>
                     <li>
                         <button
                             onClick={() => paginate(totalPages)}
-                            className={`${
-                                currentPage === totalPages ? "pointer-events-none" : ""
-                            } py-2 px-4 border border-gray-300 rounded-r-md bg-white hover:bg-gray-50`}
+                            className={`${currentPage === totalPages ? "pointer-events-none" : ""} py-2 px-4 border border-gray-300 rounded-r-md bg-white hover:bg-gray-50`}
                         >
-                            &raquo;&raquo;
+                            {">>"}
                         </button>
                     </li>
                 </ul>

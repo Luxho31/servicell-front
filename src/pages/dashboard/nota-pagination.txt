@@ -1,0 +1,243 @@
+{/* Paginación */}
+                    <div className="flex justify-center mt-4">
+                        <nav>
+                            <ul className="pagination">
+                                <li>
+                                    <button
+                                        onClick={() => paginate(1)}
+                                        className={`${
+                                            currentPage === 1
+                                                ? "pointer-events-none"
+                                                : ""
+                                        } py-2 px-4 border border-gray-300 rounded-l-md bg-white hover:bg-gray-50`}
+                                    >
+                                        &laquo;&laquo;
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={() =>
+                                            paginate(
+                                                currentPage === 1
+                                                    ? currentPage
+                                                    : currentPage - 1
+                                            )
+                                        }
+                                        className={`${
+                                            currentPage === 1
+                                                ? "pointer-events-none"
+                                                : ""
+                                        } py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50`}
+                                    >
+                                        &laquo;
+                                    </button>
+                                </li>
+                                {currentPage > 4 && (
+                                    <li>
+                                        <button
+                                            onClick={() => paginate(1)}
+                                            className="py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50"
+                                        >
+                                            1
+                                        </button>
+                                    </li>
+                                )}
+                                {currentPage > 4 && (
+                                    <li>
+                                        <button
+                                            className="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                                            disabled
+                                        >
+                                            ...
+                                        </button>
+                                    </li>
+                                )}
+                                {handleRange(
+                                    currentPage,
+                                    pageNumbers.length
+                                ).map((number) => (
+                                    <li key={number}>
+                                        <button
+                                            onClick={() => paginate(number)}
+                                            className={`${
+                                                currentPage === number
+                                                    ? "!bg-blue-500 !text-white"
+                                                    : "bg-white text-gray-700"
+                                            } py-2 px-4 border border-gray-300 hover:bg-gray-50 ${
+                                                currentPage === number
+                                                    ? "pointer-events-none"
+                                                    : ""
+                                            }`}
+                                        >
+                                            {number}
+                                        </button>
+                                    </li>
+                                ))}
+                                {currentPage < pageNumbers.length - 3 && (
+                                    <li>
+                                        <button
+                                            className="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                                            disabled
+                                        >
+                                            ...
+                                        </button>
+                                    </li>
+                                )}
+                                {currentPage < pageNumbers.length - 2 && (
+                                    <li>
+                                        <button
+                                            onClick={() =>
+                                                paginate(pageNumbers.length)
+                                            }
+                                            className="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                                        >
+                                            {pageNumbers.length}
+                                        </button>
+                                    </li>
+                                )}
+                                <li>
+                                    <button
+                                        onClick={() =>
+                                            paginate(
+                                                currentPage ===
+                                                    pageNumbers.length
+                                                    ? currentPage
+                                                    : currentPage + 1
+                                            )
+                                        }
+                                        className={`${
+                                            currentPage === pageNumbers.length
+                                                ? "pointer-events-none"
+                                                : ""
+                                        } py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50`}
+                                    >
+                                        &raquo;
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={() =>
+                                            paginate(pageNumbers.length)
+                                        }
+                                        className={`${
+                                            currentPage === pageNumbers.length
+                                                ? "pointer-events-none"
+                                                : ""
+                                        } py-2 px-4 border border-gray-300 rounded-r-md bg-white hover:bg-gray-50`}
+                                    >
+                                        &raquo;&raquo;
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+
+
+
+
+
+
+
+<div className="flex justify-center mt-4">
+            <nav>
+                <ul className="pagination">
+                    <li>
+                        <button
+                            onClick={() => paginate(1)}
+                            className={`${
+                                currentPage === 1 ? "pointer-events-none" : ""
+                            } py-2 px-4 border border-gray-300 rounded-l-md bg-white hover:bg-gray-50`}
+                        >
+                            &laquo;&laquo;
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            onClick={() => paginate(currentPage === 1 ? currentPage : currentPage - 1)}
+                            className={`${
+                                currentPage === 1 ? "pointer-events-none" : ""
+                            } py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50`}
+                        >
+                            &laquo;
+                        </button>
+                    </li>
+                    {currentPage > 4 && (
+                        <li>
+                            <button
+                                onClick={() => paginate(1)}
+                                className="py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50"
+                            >
+                                1
+                            </button>
+                        </li>
+                    )}
+                    {currentPage > 4 && (
+                        <li>
+                            <button
+                                className="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                                disabled
+                            >
+                                ...
+                            </button>
+                        </li>
+                    )}
+                    {handleRange(currentPage, totalPages).map((number) => (
+                        <li key={number}>
+                            <button
+                                onClick={() => paginate(number)}
+                                className={`${
+                                    currentPage === number
+                                        ? "!bg-blue-500 !text-white"
+                                        : "bg-white text-gray-700"
+                                } py-2 px-4 border border-gray-300 hover:bg-gray-50 ${
+                                    currentPage === number ? "pointer-events-none" : ""
+                                }`}
+                            >
+                                {number}
+                            </button>
+                        </li>
+                    ))}
+                    {currentPage < totalPages - 3 && (
+                        <li>
+                            <button
+                                className="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                                disabled
+                            >
+                                ...
+                            </button>
+                        </li>
+                    )}
+                    {currentPage < totalPages - 3 && (
+                        <li>
+                            <button
+                                onClick={() => paginate(totalPages)}
+                                className="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                            >
+                                {totalPages}
+                            </button>
+                        </li>
+                    )}
+                    <li>
+                        <button
+                            onClick={() => paginate(currentPage === totalPages ? currentPage : currentPage + 1)}
+                            className={`${
+                                currentPage === totalPages ? "pointer-events-none" : ""
+                            } py-2 px-4 border border-gray-300 bg-white hover:bg-gray-50`}
+                        >
+                            &raquo;
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            onClick={() => paginate(totalPages)}
+                            className={`${
+                                currentPage === totalPages ? "pointer-events-none" : ""
+                            } py-2 px-4 border border-gray-300 rounded-r-md bg-white hover:bg-gray-50`}
+                        >
+                            &raquo;&raquo;
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
