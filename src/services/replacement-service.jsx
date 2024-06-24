@@ -27,25 +27,61 @@ const createReplacement = async (replacement) => {
     }
 };
 
+// const getReplacements = async () => {
+//     const token = localStorage.getItem("token");
+
+//     if (!token) {
+//         console.error("No token found");
+//         return;
+//     }
+
+//     const config = {
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${token}`,
+//         },
+//     };
+
+//     try {
+//         const { data } = await clienteAxios.get(
+//             "/repuestos/getRepuestos",
+//             config
+//         );
+//         return data;
+//     } catch (error) {
+//         console.error("Error getting replacements", error);
+//     }
+// };
+
+// const getReplacement = async (id) => {
+//     const token = localStorage.getItem("token");
+
+//     if (!token) {
+//         console.error("No token found");
+//         return;
+//     }
+
+//     const config = {
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${token}`,
+//         },
+//     };
+
+//     try {
+//         const { data } = await clienteAxios.get(
+//             `/repuesto/getRepuestoById/${id}`,
+//             config
+//         );
+//         return data;
+//     } catch (error) {
+//         console.error("Error getting replacement", error);
+//     }
+// };
 const getReplacements = async () => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
-
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    };
-
     try {
         const { data } = await clienteAxios.get(
-            "/repuestos/getRepuestos",
-            config
+            "/repuestos/getRepuestos"
         );
         return data;
     } catch (error) {
@@ -54,24 +90,9 @@ const getReplacements = async () => {
 };
 
 const getReplacement = async (id) => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
-
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    };
-
     try {
         const { data } = await clienteAxios.get(
-            `/repuesto/getRepuestoById/${id}`,
-            config
+            `/repuesto/getRepuestoById/${id}`
         );
         return data;
     } catch (error) {

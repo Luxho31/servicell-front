@@ -1,14 +1,22 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
+import { FaCartPlus } from "react-icons/fa";
+import CartContext from "../context/CartProvider";
 
 const NavBar = () => {
     const { auth, cerrarSesion } = useContext(AuthContext);
+    const { cartQuantity } = useContext(CartContext);
     const navigate = useNavigate();
 
-    const handleNavigation = (path) => {
-        navigate(path);
+    // const handleNavigation = (path) => {
+    //     navigate(path);
+    // };
+
+    const handleQuantity = () => {
+        setQuantity(quantity + 1);
     };
+
     return (
         <nav className="bg-gray-800 p-4 fixed w-full z-50">
             <div className="w-[90%] flex justify-between items-center m-auto">
@@ -44,17 +52,12 @@ const NavBar = () => {
                         Cotización
                     </NavLink>
                     <NavLink
-                        to={"/contact"}
+                        to={"/product"}
                         className="text-white hover:text-gray-300 px-4"
                     >
-                        Contacto
+                        Productos
                     </NavLink>
-                    <NavLink
-                        to={"/about"}
-                        className="text-white hover:text-gray-300 px-4"
-                    >
-                        Sobre Nosotros
-                    </NavLink>
+
                     {auth && (
                         <NavLink
                             to={"/dashboard"}
@@ -65,7 +68,20 @@ const NavBar = () => {
                     )}
                 </div>
 
-                <div>
+                <div className="flex items-center">
+                <NavLink
+                        to={"/cart"}
+                        className="text-white hover:text-gray-300 px-4 relative"
+                    >
+                        <div className="p-2 rounded-full bg-indigo-300 relative">
+                            <FaCartPlus />
+                            {cartQuantity > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-500 p-1 rounded-full text-xs font-semibold">
+                                    {cartQuantity}
+                                </span>
+                            )}
+                        </div>
+                    </NavLink>
                     {auth ? (
                         <button
                             type="button"

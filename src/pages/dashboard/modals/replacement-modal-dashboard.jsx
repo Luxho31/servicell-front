@@ -36,6 +36,14 @@ const ReplacementModalDashboard = ({
 
     const createRepuesto = async () => {
         await createReplacement(formData);
+        setFormData({
+                replacement_type: modalContent?.replacement_type || "",
+                brand: modalContent?.brand || "",
+                model: modalContent?.model || "",
+                description: modalContent?.description || "",
+                price: modalContent?.price || "",
+                stock: modalContent?.stock || "",
+            });
         handleReload();
         onClose();
     };
