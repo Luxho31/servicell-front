@@ -6,6 +6,7 @@ import CartContext from "../context/CartProvider";
 
 const NavBar = () => {
     const { auth, cerrarSesion } = useContext(AuthContext);
+    // console.log(auth.name);
     const { cartQuantity } = useContext(CartContext);
     const navigate = useNavigate();
 
@@ -88,7 +89,8 @@ const NavBar = () => {
                             className="text-white hover:text-gray-300 px-4"
                             onClick={cerrarSesion}
                         >
-                            Cerrar Sesion
+                            {/* Cerrar Sesion */}
+                            {auth.name + " " + auth.lastname}
                         </button>
                     ) : (
                         <NavLink

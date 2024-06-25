@@ -34,6 +34,7 @@ const AuthProvider = ({ children }) => {
             } catch (error) {
                 // console.log("Token inválido o expirado");
                 // console.log(error.response.data.msg);
+                console.error("Error autenticando usuario:", error.response?.data?.msg || error.message);
                 localStorage.removeItem("token");
                 setAuth(null);
             }
