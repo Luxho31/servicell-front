@@ -44,3 +44,20 @@ export const removeProductFromCart = async (carritoItemId) => {
         console.error("Error removing product from cart", error);
     }
 };
+
+export const createPreference = async (productos, comprador) => {
+    try {
+        // const userId = await getInfoUser(); // Espera a obtener el userId correctamente
+        // if (!userId) {
+        //     throw new Error("No se pudo obtener el userId");
+        // }
+
+        const { data } = await clienteAxios.post("/payment/createOrden", {
+            productos,
+            comprador,
+        });
+        return data;
+    } catch (error) {
+        console.error("Error creating preference", error);
+    }
+};
