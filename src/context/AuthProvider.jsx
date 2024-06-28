@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
     const [cargando, setCargando] = useState(true);
     const [auth, setAuth] = useState(null);
     const navigate = useNavigate();
+    console.log(auth)
 
     useEffect(() => {
         const autenticarUsuario = async () => {
@@ -31,6 +32,7 @@ const AuthProvider = ({ children }) => {
                     config
                 );
                 setAuth(data);
+                console.log(data)
             } catch (error) {
                 // console.log("Token inválido o expirado");
                 // console.log(error.response.data.msg);

@@ -66,6 +66,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import { registrarMarca, listarMarcas, eliminarMarca, modificarMarca} from '../../services/brand-service';
+import Pagination from '../../shared/pagination';
 // import { registrarMarca, listarMarcas, eliminarMarca, modificarMarca } from '../../services/brand-service';
 // import '../../index.css'; // Asegúrate de importar el archivo CSS donde defines las clases CSS
 
@@ -151,6 +152,23 @@ const BrandDashboard = () => {
         modelo.Modelo.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    // Paginación
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10);
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(filteredModelos.length / itemsPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    // Calcular los índices del primer y último item de la página actual
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredModelos.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Cambiar de página
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
         <div className="flex justify-center items-start h-screen bg-white text-black relative">
             <div className="flex flex-col w-full max-w-6xl mt-8 relative">
@@ -204,7 +222,7 @@ const BrandDashboard = () => {
                         </thead>
                         <tbody>
                             {filteredModelos.length > 0 ? (
-                                filteredModelos.map((modelo, index) => (
+                                currentItems.map((modelo, index) => (
                                     <tr key={index}>
                                         <td className="border px-4 py-2">{modelo.Marca}</td>
                                         <td className="border px-4 py-2">{modelo.Modelo}</td>
@@ -231,6 +249,12 @@ const BrandDashboard = () => {
                             )}
                         </tbody>
                     </table>
+
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={pageNumbers.length}
+                        paginate={paginate}
+                    />
                 </div>
             </div>
         </div>

@@ -374,6 +374,7 @@ const InventoryDashboard = () => {
 
     return (
         <div className="container mx-auto p-4">
+            <h2 className="text-2xl font-bold mb-4">Gestionar Inventario</h2>
             <div className="py-6">
                 <div className="flex justify-between mb-6">
                     <div className="flex justify-between items-center border rounded-md p-2">

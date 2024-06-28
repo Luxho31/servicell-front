@@ -19,6 +19,7 @@ const ReplacementModalDashboard = ({
         description: "",
         price: "",
         stock: "",
+        image: null
     });
 
     useEffect(() => {
@@ -30,6 +31,7 @@ const ReplacementModalDashboard = ({
                 description: modalContent?.description || "",
                 price: modalContent?.price || "",
                 stock: modalContent?.stock || "",
+                image: modalContent?.image || null
             });
         }
     }, [action, modalContent]);
@@ -43,6 +45,7 @@ const ReplacementModalDashboard = ({
                 description: modalContent?.description || "",
                 price: modalContent?.price || "",
                 stock: modalContent?.stock || "",
+                image: modalContent?.image || null
             });
         handleReload();
         onClose();

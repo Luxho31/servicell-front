@@ -3,8 +3,8 @@ import React from 'react';
 const ProductCard = ({ product, onClick }) => {
     return (
         <div onClick={() => onClick(product)} className="cursor-pointer max-w-sm rounded overflow-hidden shadow-lg">
-            <img className="w-full" src={product.image} alt={product.model} />
             <div className="px-6 py-4">
+            <img className="w-24" src={product.image_url} alt={product.model} />
                 <div className="font-bold text-xl mb-2">{product.model}</div>
                 <p className="text-gray-700 text-base">{product.description}</p>
             </div>

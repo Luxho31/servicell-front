@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 import { FaCartPlus } from "react-icons/fa";
 import CartContext from "../context/CartProvider";
 
 const NavBar = () => {
-    const { auth, cerrarSesion } = useContext(AuthContext);
-    console.log(auth);
+    const { auth, cargando, cerrarSesion } = useContext(AuthContext);
+    // console.log(auth);
     const { cartQuantity } = useContext(CartContext);
     const navigate = useNavigate();
 
@@ -14,9 +14,16 @@ const NavBar = () => {
     //     navigate(path);
     // };
 
-    const handleQuantity = () => {
-        setQuantity(quantity + 1);
-    };
+    // useEffect(() => {
+    //     if (!auth && !cargando) {
+    //         navigate("/");
+    //     }
+    //     console.log(auth)
+    // }, [auth, cargando, navigate]);
+
+    // if (cargando) {
+    //     return <div>Cargando...</div>; // O un spinner/loading indicator
+    // }
 
     return (
         <nav className="bg-gray-800 p-4 fixed w-full z-50">
@@ -70,7 +77,7 @@ const NavBar = () => {
                 </div>
 
                 <div className="flex items-center">
-                <NavLink
+                    <NavLink
                         to={"/cart"}
                         className="text-white hover:text-gray-300 px-4 relative"
                     >
@@ -84,17 +91,17 @@ const NavBar = () => {
                         </div>
                     </NavLink>
                     {auth ? (
-                        <div>
+                        <div className="flex items-center gap-x-4">
+                            <p className="text-white">
+                                {auth.name + " " + auth.lastname}
+                            </p>
                             <button
                                 type="button"
-                                className="text-white hover:text-gray-300 px-4"
+                                className="bg-red-500 rounded p-2 text-white hover:text-gray-300 px-4"
                                 onClick={cerrarSesion}
                             >
                                 Cerrar Sesion
                             </button>
-                            <p className="text-white">
-                                {auth.name + " " + auth.lastname}
-                            </p>
                         </div>
                     ) : (
                         <NavLink
