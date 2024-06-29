@@ -7,11 +7,14 @@ const CartProvider = ({ children }) => {
     const { auth } = useContext(AuthContext);
     const [cartItems, setCartItems] = useState([]);
     const [cartQuantity, setCartQuantity] = useState(0);
+    console.log(auth)
 
     const fetchCartItems = async () => {
         try {
+            console.log(auth.id)
+            const userId = auth.id;
             if (auth) {
-                const data = await getCartItems(auth.userId);
+                const data = await getCartItems(userId);
                 setCartItems(data);
                 setCartQuantity(data.reduce((total, item) => total + item.quantity, 0));
             } else {
@@ -34,7 +37,7 @@ const CartProvider = ({ children }) => {
 
     const removeItemFromCart = async (carritoItemId) => {
         try {
-            await removeProductFromCart(carritoItemId);
+            await removeProductFromCart(carritoItemId, auth.id);
             // setCartItems(cartItems.filter(item => item._id !== carritoItemId));
             fetchCartItems();
         } catch (error) {

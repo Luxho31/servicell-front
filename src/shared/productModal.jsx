@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import CartContext from "../context/CartProvider";
-import { getInfoUser } from "../services/user-service";
+// import { getInfoUser } from "../services/user-service";
+import AuthContext from "../context/AuthProvider";
 
 const ProductModal = ({ isOpen, onClose, product }) => {
     const { addItemToCart } = useContext(CartContext);
+    const { auth } = useContext(AuthContext);
 
     useEffect(() => {
         if (isOpen) {
@@ -20,8 +22,10 @@ const ProductModal = ({ isOpen, onClose, product }) => {
 
     const handleAddToCart = async () => {
         try {
-            const userId = await getInfoUser(); // Obtener el ID de usuario
-            await addItemToCart(product._id, userId); // Agregar al carrito con el ID de repuesto y usuario
+            // const userId = await getInfoUser(); // Obtener el ID de usuario
+
+            // const userId = auth.id;
+            await addItemToCart(product._id, auth.id); // Agregar al carrito con el ID de repuesto y usuario
             onClose(); // Cerrar el modal después de agregar al carrito
         } catch (error) {
             console.error("Error adding product to cart", error);

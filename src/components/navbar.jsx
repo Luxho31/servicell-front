@@ -18,12 +18,11 @@ const NavBar = () => {
     //     if (!auth && !cargando) {
     //         navigate("/");
     //     }
-    //     console.log(auth)
     // }, [auth, cargando, navigate]);
 
-    // if (cargando) {
-    //     return <div>Cargando...</div>; // O un spinner/loading indicator
-    // }
+    if (cargando) {
+        return <div>Cargando...</div>; // O un spinner/loading indicator
+    }
 
     return (
         <nav className="bg-gray-800 p-4 fixed w-full z-50">

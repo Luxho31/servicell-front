@@ -11,7 +11,7 @@ const Cart = () => {
     const { removeItemFromCart ,clearCart } = useContext(CartContext);
     const [cartItems, setCartItems] = useState([]); // Cambia el nombre de la variable a cartItems
     const [cartTotalPrice, setCartTotalPrice] = useState(0);
-    const { auth } = useContext(AuthContext);
+    const { auth, cargando } = useContext(AuthContext);
     console.log(auth);
     const navigate = useNavigate();
 
@@ -99,6 +99,10 @@ const Cart = () => {
         } catch (error) {
             console.error('Error creating preference:', error);
         }
+    }
+
+    if (cargando) {
+        return <div>Cargando...</div>; // O un spinner/loading indicator
     }
 
     return (

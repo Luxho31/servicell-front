@@ -39,14 +39,14 @@ const ReplacementModalDashboard = ({
     const createRepuesto = async () => {
         await createReplacement(formData);
         setFormData({
-                replacement_type: modalContent?.replacement_type || "",
-                brand: modalContent?.brand || "",
-                model: modalContent?.model || "",
-                description: modalContent?.description || "",
-                price: modalContent?.price || "",
-                stock: modalContent?.stock || "",
-                image: modalContent?.image || null
-            });
+            replacement_type: modalContent?.replacement_type || "",
+            brand: modalContent?.brand || "",
+            model: modalContent?.model || "",
+            description: modalContent?.description || "",
+            price: modalContent?.price || "",
+            stock: modalContent?.stock || "",
+            image: modalContent?.image || null
+        });
         handleReload();
         onClose();
     };
@@ -97,9 +97,8 @@ const ReplacementModalDashboard = ({
                                     replacement_type: e.target.value,
                                 });
                             }}
-                            className={`${
-                                action === "view" ? "bg-gray-200" : ""
-                            } w-full p-2 border rounded`}
+                            className={`${action === "view" ? "bg-gray-200" : ""
+                                } w-full p-2 border rounded`}
                             disabled={action === "view"}
                         >
                             <option value="">Seleccione un tipo</option>
@@ -118,9 +117,8 @@ const ReplacementModalDashboard = ({
                         <input
                             type="text"
                             id="brand"
-                            className={`${
-                                action === "view" ? "bg-gray-200" : ""
-                            } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
+                            className={`${action === "view" ? "bg-gray-200" : ""
+                                } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
                             value={formData.brand}
                             onChange={(e) => {
                                 setFormData({
@@ -142,9 +140,8 @@ const ReplacementModalDashboard = ({
                         <input
                             type="text"
                             id="model"
-                            className={`${
-                                action === "view" ? "bg-gray-200" : ""
-                            } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
+                            className={`${action === "view" ? "bg-gray-200" : ""
+                                } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
                             value={formData.model}
                             onChange={(e) => {
                                 setFormData({
@@ -166,9 +163,8 @@ const ReplacementModalDashboard = ({
                         <input
                             type="text"
                             id="description"
-                            className={`${
-                                action === "view" ? "bg-gray-200" : ""
-                            } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
+                            className={`${action === "view" ? "bg-gray-200" : ""
+                                } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
                             value={formData.description}
                             onChange={(e) => {
                                 setFormData({
@@ -190,9 +186,8 @@ const ReplacementModalDashboard = ({
                         <input
                             type="text"
                             id="price"
-                            className={`${
-                                action === "view" ? "bg-gray-200" : ""
-                            } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
+                            className={`${action === "view" ? "bg-gray-200" : ""
+                                } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
                             value={formData.price}
                             onChange={(e) => {
                                 setFormData({
@@ -214,9 +209,8 @@ const ReplacementModalDashboard = ({
                         <input
                             type="number"
                             id="stock"
-                            className={`${
-                                action === "view" ? "bg-gray-200" : ""
-                            } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
+                            className={`${action === "view" ? "bg-gray-200" : ""
+                                } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
                             value={formData.stock}
                             onChange={(e) => {
                                 setFormData({
@@ -228,26 +222,29 @@ const ReplacementModalDashboard = ({
                             disabled={action === "view"}
                         />
                     </div>
-                    {/* <div className="mb-4">
-                            <label
-                                htmlFor="foto"
-                                className="block text-gray-700 text-sm font-bold mb-2"
-                            >
-                                Foto
-                            </label>
-                            <input
-                                type="file"
-                                name="foto"
-                                id="foto"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-                                onChange={(e) =>
-                                    setRepuesto({
-                                        ...repuesto,
-                                        foto: e.target.files[0],
-                                    })
-                                }
-                            />
-                        </div> */}
+                    <div className="mb-4">
+                        <label
+                            htmlFor="image"
+                            className="block text-gray-700 text-sm font-bold mb-2"
+                        >
+                            Foto
+                        </label>
+                        <input
+                            type="file"
+                            name="image"
+                            id="image"
+                            accept="image/*"
+                            className={`${action === "view" ? "bg-gray-200" : ""
+                                } w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500`}
+                            onChange={(e) => {
+                                setFormData({
+                                    ...formData,
+                                    image: e.target.files[0],
+                                });
+                            }}
+                            disabled={action === "view"}
+                        />
+                    </div>
                     <button
                         // type="submit"
                         type="button"
