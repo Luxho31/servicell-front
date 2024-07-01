@@ -8,37 +8,13 @@ import AuthContext from "../../../context/AuthProvider";
 const Cart = () => {
     // const { cartItems, clearCart } = useContext(CartContext);
     const [preferenceId, setPreferenceId] = useState(''); // Agrega el estado preferenceId
-    const { removeItemFromCart ,clearCart } = useContext(CartContext);
-    const [cartItems, setCartItems] = useState([]); // Cambia el nombre de la variable a cartItems
-    const [cartTotalPrice, setCartTotalPrice] = useState(0);
+    const { removeItemFromCart, cartItems, cartTotalPrice } = useContext(CartContext);
     const { auth, cargando } = useContext(AuthContext);
-    console.log(auth);
-    const navigate = useNavigate();
-
-    const fetchCartItems = async () => {
-        try {
-            const items = await getCartItems();
-            // console.log(items);
-            setCartItems(items);
-            setCartTotalPrice(calculateTotalPrice(items));
-        } catch (error) {
-            console.error('Error fetching cart items:', error);
-        }
-    };
-
-    useEffect(() => {
-        // loadCartItems();
-        fetchCartItems();
-    }, []);    
-
-    const calculateTotalPrice = (items) => {
-        return items.reduce((total, item) => total + item.price * item.quantity, 0);
-    };
 
     const handleRemoveItem = async (itemId) => {
         try {
             await removeItemFromCart(itemId);
-            fetchCartItems();
+            // fetchCartItems();
         } catch (error) {
             console.error('Error removing item from cart:', error);
         }
@@ -47,7 +23,7 @@ const Cart = () => {
     const handleClearCart = async () => {
         try {
             await clearCart();
-            fetchCartItems();
+            // fetchCartItems();
         } catch (error) {
             console.error('Error clearing cart:', error);
         }
@@ -101,12 +77,8 @@ const Cart = () => {
         }
     }
 
-    if (cargando) {
-        return <div>Cargando...</div>; // O un spinner/loading indicator
-    }
-
     return (
-        <div className="min-h-screen flex flex-col items-center py-8">
+        <div className="min-h-screen flex flex-col items-center py-28">
             <h2 className="text-2xl font-semibold mb-4">Carrito de Compras</h2>
             <table className="w-full table-auto">
                 <thead>

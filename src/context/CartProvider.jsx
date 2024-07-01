@@ -7,16 +7,18 @@ const CartProvider = ({ children }) => {
     const { auth } = useContext(AuthContext);
     const [cartItems, setCartItems] = useState([]);
     const [cartQuantity, setCartQuantity] = useState(0);
-    console.log(auth)
+    // console.log(auth.id)
 
     const fetchCartItems = async () => {
         try {
-            console.log(auth.id)
-            const userId = auth.id;
+            // console.log(auth.id)
+            // const userId = auth.id;
             if (auth) {
-                const data = await getCartItems(userId);
+                const data = await getCartItems(auth._id);
                 setCartItems(data);
-                setCartQuantity(data.reduce((total, item) => total + item.quantity, 0));
+                console.log(cartItems)
+                // setCartQuantity(data.reduce((total, item) => total + item.quantity, 0));
+                setCartQuantity(data.length);
             } else {
                 setCartItems([]);
                 setCartQuantity(0);
@@ -26,9 +28,17 @@ const CartProvider = ({ children }) => {
         }
     };
 
-    const addItemToCart = async (replacement, user) => {
+    // const addItemToCart = async (replacement, user) => {
+    //     try {
+    //         await addToCart(replacement, user);
+    //         fetchCartItems();
+    //     } catch (error) {
+    //         console.error("Error adding product to cart", error);
+    //     }
+    // };
+    const addItemToCart = async (replacement) => {
         try {
-            await addToCart(replacement, user);
+            await addToCart(replacement, auth._id);
             fetchCartItems();
         } catch (error) {
             console.error("Error adding product to cart", error);
@@ -37,7 +47,7 @@ const CartProvider = ({ children }) => {
 
     const removeItemFromCart = async (carritoItemId) => {
         try {
-            await removeProductFromCart(carritoItemId, auth.id);
+            await removeProductFromCart(carritoItemId, auth._id);
             // setCartItems(cartItems.filter(item => item._id !== carritoItemId));
             fetchCartItems();
         } catch (error) {
@@ -45,15 +55,15 @@ const CartProvider = ({ children }) => {
         }
     };
 
-    const clearCart = async () => {
-        try {
-            await clienteAxios.delete(`/carrito/clearCarritoItems/${getUserId()}`);
-            setCartItems([]);
-            setCartQuantity(0);
-        } catch (error) {
-            console.error("Error clearing cart", error);
-        }
-    };
+    // const clearCart = async () => {
+    //     try {
+    //         await clienteAxios.delete(`/carrito/clearCarritoItems/${getUserId()}`);
+    //         setCartItems([]);
+    //         setCartQuantity(0);
+    //     } catch (error) {
+    //         console.error("Error clearing cart", error);
+    //     }
+    // };
 
     useEffect(() => {
         fetchCartItems();
@@ -62,7 +72,7 @@ const CartProvider = ({ children }) => {
     const cartTotalPrice = cartItems.reduce((total, item) => total + item.totalPrice, 0);
 
     return (
-        <CartContext.Provider value={{ cartItems, addItemToCart, removeItemFromCart, clearCart, cartTotalPrice, fetchCartItems, cartQuantity }}>
+        <CartContext.Provider value={{ cartItems, setCartItems, addItemToCart, removeItemFromCart, cartTotalPrice, fetchCartItems, cartQuantity }}>
             {children}
         </CartContext.Provider>
     );

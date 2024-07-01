@@ -230,18 +230,20 @@ const ResponseQuotationDashboard = (
                     </table>
                 </div>
 
-                <ExportPDFButton
-                    id={modalContent?._id}
-                    data={services}
+                <div className="flex gap-x-4">
+                    <ExportPDFButton
+                        id={modalContent?._id}
+                        data={services}
                     // fileName="cotizaciones.pdf"
-                />
+                    />
 
-                <button
-                    className="bg-indigo-500 hover:bg-indigo-600 text-white border rounded-md p-2 mt-4"
-                    onClick={() => openSendEmailModal(modalContent)}
-                >
-                    Enviar Cotización al Cliente
-                </button>
+                    <button
+                        className="bg-indigo-500 hover:bg-indigo-600 text-white border rounded-md p-2"
+                        onClick={() => openSendEmailModal(modalContent)}
+                    >
+                        Enviar Cotización al Cliente
+                    </button>
+                </div>
 
                 <SendEmailModal
                     isOpen={isSendEmailModalOpen}
