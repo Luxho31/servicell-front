@@ -25,7 +25,12 @@ const ProductModal = ({ isOpen, onClose, product }) => {
             // const userId = await getInfoUser(); // Obtener el ID de usuario
 
             // const userId = auth.id;
-            await addItemToCart(product._id, auth.id); // Agregar al carrito con el ID de repuesto y usuario
+            if (!auth || !auth._id) {
+                console.error("User is not authenticated");
+                return;
+            }
+            console.log({id_product: product._id, id_user: auth._id})
+            await addItemToCart(product._id, auth._id); // Agregar al carrito con el ID de repuesto y usuario
             onClose(); // Cerrar el modal después de agregar al carrito
         } catch (error) {
             console.error("Error adding product to cart", error);

@@ -16,9 +16,8 @@ const CartProvider = ({ children }) => {
             if (auth) {
                 const data = await getCartItems(auth._id);
                 setCartItems(data);
-                console.log(cartItems)
-                // setCartQuantity(data.reduce((total, item) => total + item.quantity, 0));
-                setCartQuantity(data.length);
+                setCartQuantity(data.reduce((total, item) => total + item.quantity, 0));
+                // setCartQuantity(data.length);
             } else {
                 setCartItems([]);
                 setCartQuantity(0);
@@ -28,22 +27,22 @@ const CartProvider = ({ children }) => {
         }
     };
 
-    // const addItemToCart = async (replacement, user) => {
-    //     try {
-    //         await addToCart(replacement, user);
-    //         fetchCartItems();
-    //     } catch (error) {
-    //         console.error("Error adding product to cart", error);
-    //     }
-    // };
-    const addItemToCart = async (replacement) => {
+    const addItemToCart = async (replacement, user) => {
         try {
-            await addToCart(replacement, auth._id);
+            await addToCart(replacement, user);
             fetchCartItems();
         } catch (error) {
             console.error("Error adding product to cart", error);
         }
     };
+    // const addItemToCart = async (replacement) => {
+    //     try {
+    //         await addToCart(replacement, auth._id);
+    //         fetchCartItems();
+    //     } catch (error) {
+    //         console.error("Error adding product to cart", error);
+    //     }
+    // };
 
     const removeItemFromCart = async (carritoItemId) => {
         try {
