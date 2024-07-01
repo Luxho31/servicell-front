@@ -77,51 +77,77 @@ const Cart = () => {
         }
     }
 
+    useEffect(() => {
+        handleBuy();
+    }, [cartItems]);
+
     return (
         <div className="min-h-screen flex flex-col items-center py-28">
-            <h2 className="text-2xl font-semibold mb-4">Carrito de Compras</h2>
-            <table className="w-full table-auto">
-                <thead>
-                    <tr>
-                        <th className="px-4 py-2">Producto</th>
-                        <th className="px-4 py-2">Cantidad</th>
-                        <th className="px-4 py-2">Precio Unitario</th>
-                        <th className="px-4 py-2">Precio Total</th>
-                        <th className="px-4 py-2"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {cartItems.map((item, index) => (
-                        <tr key={index}>
-                            <td className="border px-4 py-2">{item.replacement.model}</td>
-                            <td className="border px-4 py-2">{item.quantity}</td>
-                            <td className="border px-4 py-2">S/. {item.price}</td>
-                            <td className="border px-4 py-2">S/. {item.price * item.quantity}</td>
-                            <td className="border px-4 py-2">
-                                <button
-                                    onClick={() => handleRemoveItem(item._id)}
-                                    className="text-red-500 hover:text-red-600"
-                                >
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div className="mt-6 flex justify-between items-center w-full px-4">
-                <span className="text-lg font-semibold">Total: S/. {cartTotalPrice}</span>
-                <button
-                    // onClick={handleCheckout}
-                    onClick={handleBuy}
-                    className="bg-indigo-500 text-white rounded-lg px-4 py-2 hover:bg-indigo-600"
-                >
-                    Pagar
-                </button>
-                <PaymentButton preferenceId={preferenceId}/>
+            <h2 className="text-2xl font-semibold mb-8">Carrito de Compras</h2>
+            <div className="w-full max-w-6xl flex flex-col lg:flex-row lg:justify-between">
+                <div className="w-full lg:w-2/3 mb-8 lg:mb-0">
+                    <table className="w-full table-auto bg-white shadow-md rounded-lg overflow-hidden">
+                        <thead>
+                            <tr className="bg-gray-200">
+                                <th className="px-4 py-3 text-left">Producto</th>
+                                <th className="px-4 py-3 text-left">Cantidad</th>
+                                <th className="px-4 py-3 text-left">Precio Unitario</th>
+                                <th className="px-4 py-3 text-left">Precio Total</th>
+                                <th className="px-4 py-3 text-left"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cartItems.map((item, index) => (
+                                <tr key={index} className="border-b last:border-b-0">
+                                    <td className="border-r px-4 py-3">{item.replacement.model}</td>
+                                    <td className="border-r px-4 py-3 text-center">{item.quantity}</td>
+                                    <td className="border-r px-4 py-3 text-center">S/. {item.price}</td>
+                                    <td className="border-r px-4 py-3 text-center">S/. {item.price * item.quantity}</td>
+                                    <td className="px-4 py-3 text-center">
+                                        <button
+                                            onClick={() => handleRemoveItem(item._id)}
+                                            className="text-red-500 hover:text-red-600"
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="w-full lg:w-1/3 lg:pl-8">
+                    <div className="bg-white shadow-md rounded-lg p-6">
+                        <h3 className="text-xl font-semibold mb-4">Resumen de la Compra</h3>
+                        <ul className="mb-6">
+                            {cartItems.map((item, index) => (
+                                <li key={index} className="flex justify-between mb-2">
+                                    <span>{item.replacement.model} x {item.quantity}</span>
+                                    <span>S/. {item.price * item.quantity}</span>
+                                </li>
+                            ))}
+                        </ul>
+                        <hr className="my-4" />
+                        <div className="flex justify-between items-center mb-6">
+                            <span className="text-lg font-semibold">Total</span>
+                            <span className="text-lg font-semibold">S/. {cartTotalPrice}</span>
+                        </div>
+                        {/* <div className="flex space-x-4"> */}
+                            {/* <button
+                                // onClick={handleCheckout}
+                                onClick={handleBuy}
+                                className="bg-indigo-500 text-white rounded-lg px-4 py-2 hover:bg-indigo-600"
+                            >
+                                Pagar
+                            </button> */}
+                            <PaymentButton preferenceId={preferenceId}/>
+                        {/* </div> */}
+                    </div>
+                </div>
             </div>
         </div>
     );
+    
 };
 
 export default Cart;
