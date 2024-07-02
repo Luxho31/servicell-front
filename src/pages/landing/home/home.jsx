@@ -56,11 +56,7 @@ export default function Home() {
                             className="w-52 h-52 rounded-full object-cover my-12"
                         />
                         <p className="w-72 text-center">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing
-                            elit. Autem modi fuga labore molestias harum aliquam
-                            rerum odio error velit quasi. Exercitationem,
-                            consectetur ratione quis nobis sit explicabo ut
-                            aliquid pariatur.
+                            TP1 - Alessandro Ronceros
                         </p>
                     </div>
                     <div className="flex flex-col items-center">
@@ -70,11 +66,7 @@ export default function Home() {
                             className="w-52 h-52 rounded-full object-cover my-12"
                         />
                         <p className="w-72 text-center">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing
-                            elit. Autem modi fuga labore molestias harum aliquam
-                            rerum odio error velit quasi. Exercitationem,
-                            consectetur ratione quis nobis sit explicabo ut
-                            aliquid pariatur.
+                            TP2 - Jesus Vidaurre
                         </p>
                     </div>
                     <div className="flex flex-col items-center">
@@ -84,11 +76,7 @@ export default function Home() {
                             className="w-52 h-52 rounded-full object-cover my-12"
                         />
                         <p className="w-72 text-center">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing
-                            elit. Autem modi fuga labore molestias harum aliquam
-                            rerum odio error velit quasi. Exercitationem,
-                            consectetur ratione quis nobis sit explicabo ut
-                            aliquid pariatur.
+                            TP3 - Jorge Manchego
                         </p>
                     </div>
                     <div className="flex flex-col items-center">
@@ -98,11 +86,7 @@ export default function Home() {
                             className="w-52 h-52 rounded-full object-cover my-12"
                         />
                         <p className="w-72 text-center">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing
-                            elit. Autem modi fuga labore molestias harum aliquam
-                            rerum odio error velit quasi. Exercitationem,
-                            consectetur ratione quis nobis sit explicabo ut
-                            aliquid pariatur.
+                            TP5 - Luis Sanchez
                         </p>
                     </div>
                 </div>
@@ -135,21 +119,7 @@ export default function Home() {
                                 Conócenos un poco mas...
                             </h1>
                             <p>
-                                Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Sed atque qui quae ipsum,
-                                soluta accusantium, suscipit libero cupiditate,
-                                molestias cum ad consequuntur? Ipsa fuga saepe
-                                perferendis, reiciendis velit eligendi
-                                corporis.Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Sed atque qui quae ipsum,
-                                soluta accusantium, suscipit libero cupiditate,
-                                molestias cum ad consequuntur? Ipsa fuga saepe
-                                perferendis, reiciendis velit eligendi
-                                corporis.Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Sed atque qui quae ipsum,
-                                soluta accusantium, suscipit libero cupiditate,
-                                molestias cum ad consequuntur? Ipsa fuga saepe
-                                perferendis, reiciendis velit eligendi corporis.
+                                Nos dedicamos a la Reparación de Equipos Moviles, Tablets y Laptos, desde microcomponentes, pantallas, baterias, y mas contamos con garantia de 3 a 6 meses.
                             </p>
                         </div>
                     </div>
@@ -171,7 +141,7 @@ export default function Home() {
                     <hr className="w-[50rem] h-[2px] bg-gray-300 mb-8" />
                 </div>
                 <div className="flex">
-                    <div className="w-full">
+                    <div className="w-full h-96">
                         <iframe
                             title="Ubicación de mi negocio"
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.502673178865!2d-76.97962524583367!3d-12.13164839277845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMDAnMTcuNyJTIDxzdCBOZXcgWW9yayBOYW1lLCBOZXcgWW9yaywgVHJhaWwgNjYwNzYsINCo0L7RgdGC0LDRgNCw0YHRgtGMLCAxMTAxMjM!5e0!3m2!1sen!2suk!4v1622008690631!5m2!1sen!2suk&q=-76.97962524583367,-12.13164839277845&zoom=15"
@@ -180,7 +150,7 @@ export default function Home() {
                             loading="lazy"
                         ></iframe>
                     </div>
-                    <div className="w-full flex flex-col items-center h-[40rem]">
+                    {/* <div className="w-full flex flex-col items-center h-[40rem]">
                         <h2 className="text-2xl font-semibold mb-6">
                             Contáctanos
                         </h2>
@@ -216,7 +186,7 @@ export default function Home() {
                                 Enviar
                             </button>
                         </form>
-                    </div>
+                    </div> */}
                 </div>
             </section>
         </div>

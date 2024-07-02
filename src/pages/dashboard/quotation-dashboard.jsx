@@ -129,7 +129,7 @@ const QuotationDashboard = () => {
                         <CiSearch />
                     </div>
                     <div className="flex gap-x-3">
-                        <ExportPDFButton
+                        {/* <ExportPDFButton
                             buttonName="Exportar a PDF"
                             document={
                                 <ReplacementDocument
@@ -137,7 +137,7 @@ const QuotationDashboard = () => {
                                     // fileName="cotizaciones.pdf"
                                 />
                             }
-                        />
+                        /> */}
                         <ExportExcelButton
                             data={quotations}
                             fileName="cotizaciones.xlsx"

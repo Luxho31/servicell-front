@@ -386,7 +386,7 @@ const InventoryDashboard = () => {
                         <CiSearch />
                     </div>
                     <div className="flex gap-x-3">
-                        <button
+                        {/* <button
                             type="button"
                             className="bg-red-400 hover:bg-red-500 text-white flex gap-x-2 items-center border rounded-md p-2"
                         >
@@ -399,7 +399,7 @@ const InventoryDashboard = () => {
                         >
                             <RiFileExcel2Fill />
                             Exportar Excel
-                        </button>
+                        </button> */}
                     </div>
                 </div>
                 <div className="overflow-x-auto">
