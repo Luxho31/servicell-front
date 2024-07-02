@@ -144,7 +144,7 @@ export default function Home() {
                     <div className="w-full h-96">
                         <iframe
                             title="Ubicación de mi negocio"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.502673178865!2d-76.97962524583367!3d-12.13164839277845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMDAnMTcuNyJTIDxzdCBOZXcgWW9yayBOYW1lLCBOZXcgWW9yaywgVHJhaWwgNjYwNzYsINCo0L7RgdGC0LDRgNCw0YHRgtGMLCAxMTAxMjM!5e0!3m2!1sen!2suk!4v1622008690631!5m2!1sen!2suk&q=-76.97962524583367,-12.13164839277845&zoom=15"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15642.74558482232!2d-77.04409635226142!3d-12.042938874495112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8d43ff5b5d3%3A0x378a4c567f06c1cf!2sAv.%20Argentina%20460%2C%20Cercado%20de%20Lima%2015015%2C%20Per%C3%BA!5e0!3m2!1ses!2ses!4v1622008690631!5m2!1ses!2ses"
                             className="w-full h-full"
                             allowFullScreen=""
                             loading="lazy"

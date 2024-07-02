@@ -340,6 +340,7 @@ const ReplacementDashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);
     const [actionModal, setActionModal] = useState("");
+    const [search, setSearch] = useState("")
 
     const fetchReplacements = async () => {
         const data = await getReplacements();
@@ -403,6 +404,7 @@ const ReplacementDashboard = () => {
                             type="text"
                             placeholder="Buscar..."
                             className="outline-none"
+                            onChange={(e) => setSearch(e.target.value)}
                         />
                         <CiSearch />
                     </div>
@@ -461,7 +463,10 @@ const ReplacementDashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentItems.map((item, index) => (
+                        {/* modelo.Marca.toLowerCase().includes(searchTerm.toLowerCase()) */}
+                            {currentItems.filter((item)=>{
+                                return search.toLowerCase() === ''? item : item.model.toLowerCase().includes(search)
+                            }).map((item, index) => (
                                 <tr
                                     key={index}
                                     className="bg-white border-b-2 border-gray-200"

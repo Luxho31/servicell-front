@@ -45,7 +45,7 @@ const ReplacementModalDashboard = ({
             description: modalContent?.description || "",
             price: modalContent?.price || "",
             stock: modalContent?.stock || "",
-            image: modalContent?.image || null
+            image: null
         });
         handleReload();
         onClose();
@@ -103,7 +103,7 @@ const ReplacementModalDashboard = ({
                         >
                             <option value="">Seleccione un tipo</option>
                             <option value="Pantallas">Pantallas</option>
-                            <option value="Socket">Sócalo</option>
+                            <option value="Zocalo">Zocalo</option>
                             <option value="Baterias">Baterías</option>
                         </select>
                     </div>
