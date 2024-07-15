@@ -12,6 +12,7 @@ const Product = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [replacements, setReplacements] = useState([]);
+    const [replacementType, setReplacementType] = useState([]);
 
     const fetchReplacements = async () => {
         const data = await getReplacements();
@@ -55,6 +56,11 @@ const Product = () => {
                     Aquí encontrarás los mejores repuestos para tus dispositivos
                 </p>
             </header>
+            <div className="flex items-start gap-x-4">
+                <div className="border">
+                    <h1>Filtros</h1>
+
+                </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {currentItems.map((product, index) => (
                     <ProductCard
@@ -63,6 +69,7 @@ const Product = () => {
                         onClick={handleCardClick}
                     />
                 ))}
+            </div>
             </div>
             <Pagination
                 currentPage={currentPage}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Modal = ({ isOpen, onClose, children, title }) => {
+const Modal = ({ isOpen, onClose, children, size, title }) => {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
@@ -28,7 +28,7 @@ const Modal = ({ isOpen, onClose, children, title }) => {
         >
             <div
                 // className={`bg-white rounded-lg shadow-lg p-6 w-[80%] transform transition-transform duration-300 ${
-                className={`bg-white rounded-lg shadow-lg p-6 w-1/3 transform transition-transform duration-300 ${
+                className={`bg-white rounded-lg shadow-lg p-6 w-[${size}%] transform transition-transform duration-300 ${
                     isOpen ? "scale-100" : "scale-90"
                 }`}
             >

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaEye, FaFilePdf, FaTrash } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
+import { MdAdd, MdEdit } from "react-icons/md";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import ReplacementModalDashboard from "./modals/replacement-modal-dashboard";
 import Pagination from "../../shared/pagination";
@@ -341,6 +341,7 @@ const ReplacementDashboard = () => {
     const [modalContent, setModalContent] = useState(null);
     const [actionModal, setActionModal] = useState("");
     const [search, setSearch] = useState("")
+    const [title, setTitle] = useState("")
 
     const fetchReplacements = async () => {
         const data = await getReplacements();
@@ -367,7 +368,15 @@ const ReplacementDashboard = () => {
     // Calcular los índices del primer y último item de la página actual
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = replacements.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Filtrar por marca y modelo
+    const filteredReplacements = replacements.filter(item => 
+        item.replacement_type.toLowerCase().includes(search.toLowerCase()) ||
+        item.brand.toLowerCase().includes(search.toLowerCase()) ||
+        item.model.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const currentItems = filteredReplacements.slice(indexOfFirstItem, indexOfLastItem);
 
     // Cambiar de página
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -411,12 +420,14 @@ const ReplacementDashboard = () => {
                     <div className="flex gap-x-3">
                         <button
                             type="button"
-                            className="bg-blue-400 hover:bg-blue-500 text-white flex gap-x-2 items-center border rounded-md p-2"
+                            className="flex gap-x-2 items-center border rounded-md p-2 hover:shadow-md"
                             onClick={() => {
                                 openModal();
                                 setActionModal("create");
+                                setTitle("Crear Repuesto")
                             }}
                         >
+                            <MdAdd />
                             Crear
                         </button>
                         {/* <button
@@ -464,9 +475,7 @@ const ReplacementDashboard = () => {
                         </thead>
                         <tbody>
                         {/* modelo.Marca.toLowerCase().includes(searchTerm.toLowerCase()) */}
-                            {currentItems.filter((item)=>{
-                                return search.toLowerCase() === ''? item : item.model.toLowerCase().includes(search)
-                            }).map((item, index) => (
+                            {currentItems.map((item, index) => (
                                 <tr
                                     key={index}
                                     className="bg-white border-b-2 border-gray-200"
@@ -503,6 +512,7 @@ const ReplacementDashboard = () => {
                                             onClick={() => {
                                                 openModal(item);
                                                 setActionModal("edit");
+                                                setTitle("Editar Repuesto")
                                             }}
                                         >
                                             <MdEdit />
@@ -523,6 +533,7 @@ const ReplacementDashboard = () => {
                                             onClick={() => {
                                                 openModal(item);
                                                 setActionModal("view");
+                                                setTitle("Detalles del Repuesto")
                                             }}
                                         >
                                             <FaEye />
@@ -543,6 +554,7 @@ const ReplacementDashboard = () => {
                         onClose={closeModal}
                         modalContent={modalContent}
                         action={actionModal}
+                        title={title}
                         handleReload={fetchReplacements}
                     />
                     <DeleteReplacementModal
