@@ -370,7 +370,7 @@ const ReplacementDashboard = () => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
     // Filtrar por marca y modelo
-    const filteredReplacements = replacements.filter(item => 
+    const filteredReplacements = replacements.filter(item =>
         item.replacement_type.toLowerCase().includes(search.toLowerCase()) ||
         item.brand.toLowerCase().includes(search.toLowerCase()) ||
         item.model.toLowerCase().includes(search.toLowerCase())
@@ -392,7 +392,7 @@ const ReplacementDashboard = () => {
     };
 
     const [modalEstaAbierto, setModalEstaAbierto] = useState(false);
-    
+
     const abrirModal = (content) => {
         setModalContent(content);
         setModalEstaAbierto(true);
@@ -474,7 +474,7 @@ const ReplacementDashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                        {/* modelo.Marca.toLowerCase().includes(searchTerm.toLowerCase()) */}
+                            {/* modelo.Marca.toLowerCase().includes(searchTerm.toLowerCase()) */}
                             {currentItems.map((item, index) => (
                                 <tr
                                     key={index}
@@ -543,27 +543,27 @@ const ReplacementDashboard = () => {
                             ))}
                         </tbody>
                     </table>
-
-                    <Pagination
-                        currentPage={currentPage}
-                        totalPages={pageNumbers.length}
-                        paginate={paginate}
-                    />
-                    <ReplacementModalDashboard
-                        isOpen={isModalOpen}
-                        onClose={closeModal}
-                        modalContent={modalContent}
-                        action={actionModal}
-                        title={title}
-                        handleReload={fetchReplacements}
-                    />
-                    <DeleteReplacementModal
-                        isOpen={modalEstaAbierto}
-                        onClose={cerrarModal}
-                        modalContent={modalContent}
-                        handleReload={fetchReplacements}
-                    />
                 </div>
+                
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={pageNumbers.length}
+                    paginate={paginate}
+                />
+                <ReplacementModalDashboard
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    modalContent={modalContent}
+                    action={actionModal}
+                    title={title}
+                    handleReload={fetchReplacements}
+                />
+                <DeleteReplacementModal
+                    isOpen={modalEstaAbierto}
+                    onClose={cerrarModal}
+                    modalContent={modalContent}
+                    handleReload={fetchReplacements}
+                />
             </div>
         </div>
     );

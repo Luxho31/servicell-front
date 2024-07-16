@@ -141,6 +141,7 @@ const QuotationDashboard = () => {
                         <ExportExcelButton
                             data={quotations}
                             fileName="cotizaciones.xlsx"
+                            style="flex gap-x-2 items-center border rounded-md p-2 hover:shadow-md"
                         />
                     </div>
                 </div>

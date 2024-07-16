@@ -1,7 +1,7 @@
 import { RiFileExcel2Fill } from "react-icons/ri";
 import * as XLSX from "xlsx";
 
-const ExportExcelButton = ({ data, fileName }) => {
+const ExportExcelButton = ({ data, fileName, style }) => {
     const handleOnExportExcel = () => {
         let wb = XLSX.utils.book_new();
         let ws = XLSX.utils.json_to_sheet(
@@ -23,7 +23,8 @@ const ExportExcelButton = ({ data, fileName }) => {
     return (
         <button
             type="button"
-            className="bg-green-700 hover:bg-green-800 text-white flex gap-x-2 items-center border rounded-md p-2"
+            // className="bg-green-700 hover:bg-green-800 text-white flex gap-x-2 items-center border rounded-md p-2"
+            className={style}
             onClick={handleOnExportExcel}
         >
             <RiFileExcel2Fill />

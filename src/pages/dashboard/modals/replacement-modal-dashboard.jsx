@@ -64,7 +64,9 @@ const ReplacementModalDashboard = ({
                         newErrors[field] = "*Precio es requerido";
                         break;
                     case "image":
-                        newErrors[field] = "*Imagen es requerida";
+                        if (action !== "edit" || !formData.image) {                            
+                            newErrors[field] = "*Imagen es requerida";
+                        }
                         break;
                     default:
                         break;
@@ -82,11 +84,11 @@ const ReplacementModalDashboard = ({
         if (!validate()) return;
         await createReplacement(formData);
         setFormData({
-            replacement_type: modalContent?.replacement_type || "",
-            brand: modalContent?.brand || "",
-            model: modalContent?.model || "",
-            description: modalContent?.description || "",
-            price: modalContent?.price || "",
+            replacement_type: "",
+            brand: "",
+            model: "",
+            description: "",
+            price: "",
             // stock: modalContent?.stock || "",
             image: null
         });
@@ -345,10 +347,11 @@ const ReplacementModalDashboard = ({
                     <button
                         // type="submit"
                         type="button"
-                        className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded focus:outline-none"
+                        className={`${action === "view" ? "hidden" : ""} bg-blue-500 hover:bg-blue-600 text-white p-2 rounded focus:outline-none`}
                         onClick={handleAction}
                     >
-                        Guardar Repuesto
+                        {/* Guardar Repuesto */}
+                        {action === 'create' ? 'Guardar Repuesto' : action === 'edit' && 'Actualizar Repuesto'}
                     </button>
                 </form>
             </div>
