@@ -1,62 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
-import CartContext from "../../../context/CartProvider";
-import { useNavigate } from "react-router-dom";
-import { createPreference, getCartItems } from "../../../services/cart-service";
-import PaymentButton from "../../../shared/paymentButton";
 import AuthContext from "../../../context/AuthProvider";
+import CartContext from "../../../context/CartProvider";
+import { createPreference } from "../../../services/cart-service";
+import PaymentButton from "../../../shared/paymentButton";
 
 const Cart = () => {
-    // const { cartItems, clearCart } = useContext(CartContext);
-    const [preferenceId, setPreferenceId] = useState(''); // Agrega el estado preferenceId
+    const [preferenceId, setPreferenceId] = useState('');
     const { removeItemFromCart, cartItems, cartTotalPrice } = useContext(CartContext);
     const { auth, cargando } = useContext(AuthContext);
 
     const handleRemoveItem = async (itemId) => {
         try {
             await removeItemFromCart(itemId);
-            // fetchCartItems();
         } catch (error) {
             console.error('Error removing item from cart:', error);
         }
     }
-
-    const handleClearCart = async () => {
-        try {
-            await clearCart();
-            // fetchCartItems();
-        } catch (error) {
-            console.error('Error clearing cart:', error);
-        }
-    }
-
-    // const handleCheckout = () => {
-    //     // Aquí deberías integrar el enlace de Mercado Pago
-    //     const mercadoPagoLink = 'https://www.mercadopago.com'; // Reemplaza con tu enlace de Mercado Pago
-    //     window.location.href = mercadoPagoLink;
-    // };
-
-    // // const createPreferenceId = async () => {
-    // //     try {
-    // //         const items = cartItems.map((item) => ({
-    // //             title: item.replacement.model,
-    // //             quantity: item.quantity,
-    // //             description: item.replacement.description,
-    // //             unit_price: item.price,
-    // //         }));
-
-    // //         const { preferenceId } = await createPreference(items);
-    // //         return preferenceId;
-    // //     } catch (error) {
-    // //         console.error('Error creating preference:', error);
-    // //     }
-    // // }
 
     const handleBuy = async () => {
         try {
             const productos = cartItems.map((item) => ({
                 title: item.replacement.model,
                 quantity: item.quantity,
-                // description: item.replacement.description,
                 unit_price: item.price,
             }));
 
@@ -78,7 +43,8 @@ const Cart = () => {
     }
 
     useEffect(() => {
-        handleBuy();
+        // Cambiar esto
+        // handleBuy();
     }, [cartItems]);
 
     return (
