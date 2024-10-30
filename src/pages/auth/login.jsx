@@ -2,30 +2,32 @@ import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Illustration1 from "../../assets/Illustration_1.png";
 import Fondo from "../../assets/background.jpg";
-import clienteAxios from "../../config/axios";
 import AuthContext from "../../context/AuthProvider";
+import { profile, signIn } from "../../services/auth-service";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const { setAuth } = useContext(AuthContext);
+    const [form, setForm] = useState({ email: "", password: "" });
+    const { setAuth, googleAuth } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if ([email, password].includes("")) {
+        if ([form.email, form.password].includes("")) {
             console.log("Todos los campos son obligatorios");
             return;
         }
 
         try {
-            const { data } = await clienteAxios.post("/usuarios/login", {
-                email,
-                password,
-            });
-            localStorage.setItem("token", data.token);
+            const response = await signIn(form);
+
+            if (!response) {
+                console.error("Error al iniciar sesión");
+                return;
+            }
+            
+            const data = await profile();
             setAuth(data);
             navigate("/");
         } catch (error) {
@@ -75,6 +77,15 @@ const Login = () => {
                     <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">
                         Iniciar sesión
                     </h2>
+                    <div className="flex justify-between gap-x-4">
+                        <button className="bg-gray-200 rounded w-full py-2" onClick={googleAuth}>Google</button>
+                        <button className="bg-gray-200 rounded w-full py-2">Apple</button>
+                    </div>
+                    <div className="flex items-center">
+                        <hr className="my-6 w-full border-t border-gray-300 flex-grow" />
+                        <p className="mx-4 text-gray-500">o</p>
+                        <hr className="my-6 w-full border-t border-gray-300 flex-grow" />
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-6">
                             <label
@@ -86,8 +97,9 @@ const Login = () => {
                             <input
                                 type="email"
                                 id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={form.email}
+                                // onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setForm({ ...form, email: e.target.value })}
                                 placeholder="Correo electrónico"
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                             />
@@ -102,8 +114,9 @@ const Login = () => {
                             <input
                                 type="password"
                                 id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={form.password}
+                                // onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => setForm({ ...form, password: e.target.value })}
                                 placeholder="Contraseña"
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                             />

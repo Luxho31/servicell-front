@@ -12,9 +12,11 @@
   "dependencies": {
     "@mercadopago/sdk-react": "^0.0.19",
     "@react-pdf/renderer": "^3.4.4",
+    "antd": "^5.19.3",
     "axios": "^1.6.8",
     "chart.js": "^4.4.3",
     "express": "^4.19.2",
+    "framer-motion": "^11.3.17",
     "merge": "^2.1.1",
     "mongoose": "^8.3.2",
     "react": "^18.2.0",

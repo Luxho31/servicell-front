@@ -13,17 +13,17 @@ export const createQuotation = async (form) => {
 };
 
 export const getQuotations = async () => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
+    // if (!token) {
+    //     console.error("No token found");
+    //     return;
+    // }
 
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
         },
     };
 
@@ -39,17 +39,17 @@ export const getQuotations = async () => {
 };
 
 export const getQuotation = async (id) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
+    // if (!token) {
+    //     console.error("No token found");
+    //     return;
+    // }
 
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
         },
     };
 
@@ -62,17 +62,17 @@ export const getQuotation = async (id) => {
 };
 
 export const updateQuotation = async (id, form) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
+    // if (!token) {
+    //     console.error("No token found");
+    //     return;
+    // }
 
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
         },
     };
 
@@ -98,17 +98,17 @@ export const deleteQuotation = async (id) => {
 };
 
 export const downloadPDFQuotation = async (id, services) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
+    // if (!token) {
+    //     console.error("No token found");
+    //     return;
+    // }
 
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
         },
         responseType: "blob",
     };
@@ -135,12 +135,12 @@ export const downloadPDFQuotation = async (id, services) => {
 
 export const sendEmail = async (id, file) => {
 // export const sendEmail = async (id) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
+    // if (!token) {
+    //     console.error("No token found");
+    //     return;
+    // }
 
     const formData = new FormData();
     formData.append("archivo", file);
@@ -148,7 +148,7 @@ export const sendEmail = async (id, file) => {
     const config = {
         headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
         },
         // responseType: "blob",
     };

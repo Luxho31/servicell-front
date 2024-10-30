@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import clienteAxios from "../config/axios";
 import { useNavigate } from "react-router-dom";
+import { logout, profile } from "../services/auth-service";
 
 const AuthContext = createContext();
 
@@ -11,32 +11,11 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const autenticarUsuario = async () => {
-            const token = localStorage.getItem("token");
-
-            if (!token) {
-                setCargando(false);
-                return;
-            }
-
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            };
-
             try {
-                const { data } = await clienteAxios.get(
-                    "/usuarios/perfil",
-                    config
-                );
+                const data = await profile();
                 setAuth(data);
-                // console.log(data)
             } catch (error) {
-                // console.log("Token inválido o expirado");
-                // console.log(error.response.data.msg);
                 console.error("Error autenticando usuario:", error.response?.data?.msg || error.message);
-                localStorage.removeItem("token");
                 setAuth(null);
             }
 
@@ -46,8 +25,14 @@ const AuthProvider = ({ children }) => {
         autenticarUsuario();
     }, []);
 
+    //TODO: Pasar todos los endpoints de autenticación del backend
+    /*
+    * Pasar el Login
+    * Pasar el register
+    */
+
     const cerrarSesion = () => {
-        localStorage.removeItem("token");
+        logout();
         setAuth(null);
         navigate("/");
     };

@@ -12,7 +12,7 @@ const sidebarItems = [
         icon: <AiFillHome className="text-xl" />,
     },
     {
-        itemName: "Marca",
+        itemName: "Marcas",
         path: "/dashboard/brand",
         icon: <IoMdPricetags className="text-xl" />,
     },
@@ -22,13 +22,18 @@ const sidebarItems = [
         icon: <FaTools className="text-xl" />,
     },
     {
-        itemName: "Cotización",
+        itemName: "Cotizaciones",
         path: "/dashboard/quotation",
         icon: <FaFileAlt className="text-xl" />,
     },
     {
         itemName: "Inventario",
         path: "/dashboard/inventory",
+        icon: <FaBoxOpen className="text-xl" />,
+    },
+    {
+        itemName: "Perfil",
+        path: "/dashboard/profile",
         icon: <FaBoxOpen className="text-xl" />,
     },
 ];

@@ -2,17 +2,20 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Illustration2 from "../../assets/Illustration_2.png";
 import Fondo from "../../assets/background.jpg";
-import clienteAxios from "../../config/axios";
+import { signUp } from "../../services/auth-service";
 
 const Register = () => {
-    const [name, setName] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [sex, setSex] = useState("");
-    const [birthdate, setBirthdate] = useState("");
-    const [phone, setPhone] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [form, setForm] = useState({
+        name: "",
+        lastname: "",
+        sex: "",
+        birthdate: "",
+        phone: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+
     const [paso, setPaso] = useState(1);
 
     const navigate = useNavigate();
@@ -20,45 +23,25 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (
-            [
-                name,
-                lastname,
-                sex,
-                birthdate,
-                phone,
-                email,
-                password,
-                confirmPassword,
-            ].includes("")
-        ) {
+        if (Object.values(form).includes("")) {
             console.log("Hay campos vacios");
             return;
         }
 
-        if (password !== confirmPassword) {
+        if (form.password !== form.confirmPassword) {
             console.log("Los Password no son iguales");
             return;
         }
 
-        if (password.length < 6) {
+        if (form.password.length < 6) {
             console.log("El Password es muy corto, agrega minimo 6 caracteres");
             return;
         }
 
         try {
-            await clienteAxios.post("/usuarios/register", {
-                name,
-                lastname,
-                sex,
-                birthdate,
-                phone,
-                email,
-                password,
-                confirmPassword,
-            });
-            navigate("/");
-            console.log("Creado correctamente");
+            const data = await signUp(form);
+            console.log("form: ", form, "data: ", data);
+            // navigate("/");
         } catch (error) {
             console.log("error: ", error);
         }
@@ -119,10 +102,11 @@ const Register = () => {
                                     <input
                                         type="text"
                                         id="name"
-                                        value={name}
-                                        onChange={(e) =>
-                                            setName(e.target.value)
-                                        }
+                                        value={form.name}
+                                        // onChange={(e) =>
+                                        //     setName(e.target.value)
+                                        // }
+                                        onChange={(e) => setForm({ ...form, name: e.target.value })}
                                         placeholder="Nombre"
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                                     />
@@ -137,10 +121,11 @@ const Register = () => {
                                     <input
                                         type="text"
                                         id="lastname"
-                                        value={lastname}
-                                        onChange={(e) =>
-                                            setLastname(e.target.value)
-                                        }
+                                        value={form.lastname}
+                                        // onChange={(e) =>
+                                        //     setLastname(e.target.value)
+                                        // }
+                                        onChange={(e) => setForm({ ...form, lastname: e.target.value })}
                                         placeholder="Apellido"
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                                     />
@@ -154,8 +139,9 @@ const Register = () => {
                                     </label>
                                     <select
                                         id="sex"
-                                        value={sex}
-                                        onChange={(e) => setSex(e.target.value)}
+                                        value={form.sex}
+                                        // onChange={(e) => setSex(e.target.value)}
+                                        onChange={(e) => setForm({ ...form, sex: e.target.value })}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                                         defaultValue=""
                                     >
@@ -180,10 +166,11 @@ const Register = () => {
                                     <input
                                         type="date"
                                         id="birthdate"
-                                        value={birthdate}
-                                        onChange={(e) =>
-                                            setBirthdate(e.target.value)
-                                        }
+                                        value={form.birthdate}
+                                        // onChange={(e) =>
+                                        //     setBirthdate(e.target.value)
+                                        // }
+                                        onChange={(e) => setForm({ ...form, birthdate: e.target.value })}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                                     />
                                 </div>
@@ -197,10 +184,11 @@ const Register = () => {
                                     <input
                                         type="tel"
                                         id="phone"
-                                        value={phone}
-                                        onChange={(e) =>
-                                            setPhone(e.target.value)
-                                        }
+                                        value={form.phone}
+                                        // onChange={(e) =>
+                                        //     setPhone(e.target.value)
+                                        // }
+                                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
                                         placeholder="Teléfono"
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                                     />
@@ -230,10 +218,11 @@ const Register = () => {
                                     <input
                                         type="email"
                                         id="email"
-                                        value={email}
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
+                                        value={form.email}
+                                        // onChange={(e) =>
+                                        //     setEmail(e.target.value)
+                                        // }
+                                        onChange={(e) => setForm({ ...form, email: e.target.value })}
                                         placeholder="Correo electrónico"
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                                     />
@@ -248,10 +237,11 @@ const Register = () => {
                                     <input
                                         type="password"
                                         id="password"
-                                        value={password}
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
+                                        value={form.password}
+                                        // onChange={(e) =>
+                                        //     setPassword(e.target.value)
+                                        // }
+                                        onChange={(e) => setForm({ ...form, password: e.target.value })}
                                         placeholder="Contraseña"
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                                     />
@@ -266,10 +256,11 @@ const Register = () => {
                                     <input
                                         type="password"
                                         id="confirmPassword"
-                                        value={confirmPassword}
-                                        onChange={(e) =>
-                                            setConfirmPassword(e.target.value)
-                                        }
+                                        value={form.confirmPassword}
+                                        // onChange={(e) =>
+                                        //     setConfirmPassword(e.target.value)
+                                        // }
+                                        onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
                                         placeholder="Confirmar contraseña"
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                                     />

@@ -1,18 +1,18 @@
 import clienteAxios from "../config/axios";
 
 const createReplacement = async (replacement) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
+    // if (!token) {
+    //     console.error("No token found");
+    //     return;
+    // }
 
     const config = {
         headers: {
             // "Content-Type": "application/json",
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
         },
     };
 
@@ -102,18 +102,18 @@ const getReplacement = async (id) => {
 };
 
 const updateReplacement = async (id, replacement) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
+    // if (!token) {
+    //     console.error("No token found");
+    //     return;
+    // }
 
     const config = {
         headers: {
             // "Content-Type": "application/json",
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
         },
     };
 
@@ -130,17 +130,17 @@ const updateReplacement = async (id, replacement) => {
 };
 
 const deleteReplacement = async (id) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
+    // if (!token) {
+    //     console.error("No token found");
+    //     return;
+    // }
 
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
         },
     };
 

@@ -1,42 +1,48 @@
 import clienteAxios from '../config/axios';
 
-export const registrarMarca = async (marca, modelo) => {
+const createBrand = async (form) => {
     try {
-        const { data } = await clienteAxios.post('/Marcas/Registrar', { Marca: marca, Modelo: modelo });
+        const { data } = await clienteAxios.post('/brands/createBrand', form);
         return data;
     } catch (error) {
-        console.error('Error al registrar la marca', error);
-        throw new Error('Error al registrar la marca');
+        console.error('Error creating brand', error);
     }
 };
 
-export const listarMarcas = async () => {
+const getBrands = async () => {
     try {
-        const { data } = await clienteAxios.get('/Marcas/Listar');
+        const { data } = await clienteAxios.get('/brands/getBrands');
         return data;
     } catch (error) {
-        console.error('Error al obtener la lista de marcas', error);
-        throw new Error('Error al obtener la lista de marcas');
+        console.error('Error getting brands', error);
     }
 };
 
-export const modificarMarca = async (id, marca, modelo) => {
+const getBrand = async (id) => {
     try {
-        const { data } = await clienteAxios.put(`/Marcas/ModificarId/${id}`, { Marca: marca, Modelo: modelo });
+        const { data } = await clienteAxios.get(`/brands/getBrand/${id}`);
         return data;
     } catch (error) {
-        console.error('Error al modificar la marca', error);
-        throw new Error('Error al modificar la marca');
+        console.error('Error getting brand', error);
     }
 };
 
-
-export const eliminarMarca = async (id) => {
+const updateBrand = async (id, form) => {
     try {
-        const { data } = await clienteAxios.delete(`/Marcas/Eliminar/${id}`);
+        const { data } = await clienteAxios.put(`/brands/updateBrand/${id}`, form);
         return data;
     } catch (error) {
-        console.error('Error al eliminar la marca', error);
-        throw new Error('Error al eliminar la marca');
+        console.error('Error updating brand', error);
     }
 };
+
+const deleteBrand = async (id) => {
+    try {
+        const { data } = await clienteAxios.delete(`/brands/deleteBrand/${id}`);
+        return data;
+    } catch (error) {
+        console.error('Error deleting brand', error);
+    }
+};
+
+export { createBrand, getBrands, getBrand, updateBrand, deleteBrand };

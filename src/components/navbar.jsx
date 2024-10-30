@@ -1,24 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
+import { useContext } from "react";
 import { FaCartPlus } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import AuthContext from "../context/AuthProvider";
 import CartContext from "../context/CartProvider";
 
 const NavBar = () => {
     const { auth, cargando, cerrarSesion } = useContext(AuthContext);
-    // console.log(auth);
+    console.log(auth);
     const { cartQuantity } = useContext(CartContext);
-    const navigate = useNavigate();
-
-    // const handleNavigation = (path) => {
-    //     navigate(path);
-    // };
-
-    // useEffect(() => {
-    //     if (!auth && !cargando) {
-    //         navigate("/");
-    //     }
-    // }, [auth, cargando, navigate]);
 
     if (cargando) {
         return <div>Cargando...</div>; // O un spinner/loading indicator
@@ -90,9 +79,10 @@ const NavBar = () => {
                         </div>
                     </NavLink>
                     {auth ? (
+                        // {auth || Object?.keys(userData)?.length > 0 ? (
                         <div className="flex items-center gap-x-4">
                             <p className="text-white">
-                                {auth.name + " " + auth.lastname}
+                                {auth.name + " " + auth.lastname || userData?.displayName}
                             </p>
                             <button
                                 type="button"
